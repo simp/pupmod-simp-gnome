@@ -1,0 +1,7 @@
+---
+fixtures:
+  symlinks:
+    windowmanager: "#{source_dir}"
+    mozilla: "#{source_dir}/../mozilla"
+    stdlib: "#{source_dir}/../stdlib"
+    xwindows: "#{source_dir}/../xwindows"
