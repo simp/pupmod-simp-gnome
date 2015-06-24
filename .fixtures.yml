@@ -1,7 +1,8 @@
 ---
 fixtures:
+  repositories:
+    mozilla: "git://github.com/simp/pupmod-simp-mozilla"
+    stdlib: "git://github.com/simp/puppetlabs-stdlib"
+    xwindows: "git://github.com/simp/pupmod-simp-xwindows"
   symlinks:
     windowmanager: "#{source_dir}"
-    mozilla: "#{source_dir}/../mozilla"
-    stdlib: "#{source_dir}/../stdlib"
-    xwindows: "#{source_dir}/../xwindows"
