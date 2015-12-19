@@ -2,10 +2,10 @@ require 'spec_helper'
 
 describe 'windowmanager::gnome::sec' do
 
-  it { should create_class('windowmanager::gnome::sec') }
+  it { is_expected.to create_class('windowmanager::gnome::sec') }
 
-  it { should contain_gconf('screensaver_enabled') }
-  it { should contain_gconf('screensaver_timeout') }
-  it { should contain_gconf('screensaver_lock') }
+  it { is_expected.to contain_gconf('screensaver_enabled') }
+  it { is_expected.to contain_gconf('screensaver_timeout') }
+  it { is_expected.to contain_gconf('screensaver_lock') }
 
 end

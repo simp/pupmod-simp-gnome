@@ -2,7 +2,7 @@ require 'spec_helper'
 
 describe 'windowmanager' do
 
-  it { should create_class('windowmanager') }
-  it { should contain_class('mozilla::firefox') }
+  it { is_expected.to create_class('windowmanager') }
+  it { is_expected.to contain_class('mozilla::firefox') }
 
 end
