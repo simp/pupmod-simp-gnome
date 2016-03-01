@@ -70,4 +70,6 @@ class windowmanager::gnome(
   }
 
   validate_bool($include_sec)
+
+  compliance_map()
 }

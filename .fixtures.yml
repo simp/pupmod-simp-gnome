@@ -4,5 +4,6 @@ fixtures:
     mozilla: "git://github.com/simp/pupmod-simp-mozilla"
     stdlib: "git://github.com/simp/puppetlabs-stdlib"
     xwindows: "git://github.com/simp/pupmod-simp-xwindows"
+    compliance: "https://github.com/trevor-vaughan/pupmod-compliance"
   symlinks:
     windowmanager: "#{source_dir}"

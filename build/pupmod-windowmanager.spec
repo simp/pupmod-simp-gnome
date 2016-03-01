@@ -1,7 +1,7 @@
 Summary: Windowmanager Puppet Module
 Name: pupmod-windowmanager
 Version: 4.1.0
-Release: 2
+Release: 3
 License: Apache License, Version 2.0
 Group: Applications/System
 Source: %{name}-%{version}-%{release}.tar.gz
@@ -12,6 +12,7 @@ Requires: puppetlabs-stdlib >= 4.1.0-0
 Buildarch: noarch
 Requires: simp-bootstrap >= 4.2.0
 Obsoletes: pupmod-windowmanager-test
+Requires: pupmod-onyxpoint-compliance_markup
 
 Prefix:"/etc/puppet/environments/simp/modules"
 
@@ -57,6 +58,9 @@ fi
 # Post uninstall stuff
 
 %changelog
+* Tue Mar 01 2016 Ralph Wright <ralph.wright@onyxpoint.com> - 4.1.0-3
+- Added compliance function support
+
 * Fri Jan 16 2015 Trevor Vaughan <tvaughan@onyxpoint.com> - 4.1.0-2
 - Changed puppet-server requirement to puppet
 
