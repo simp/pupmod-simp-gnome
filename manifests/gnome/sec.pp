@@ -7,6 +7,8 @@
 # * Trevor Vaughan <tvaughan@onyxpoint.com>
 #
 class windowmanager::gnome::sec {
+  compliance_map()
+
   if ( versioncmp($::operatingsystemmajrelease, '6') > 0 ) {
     # TODO: Screensaver settings here
   } else {
@@ -29,5 +31,10 @@ class windowmanager::gnome::sec {
       schema  => 'mandatory',
       require => Package['gnome-screensaver']
     }
+  }
+
+  # If gdm is greater than 3, then we need to use dconf to secure the desktop	
+  if ( versioncmp($::gdm_version, '3') > 0 ) {
+    include 'windowmanager::gnome::dconf'
   }
 }
