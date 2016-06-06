@@ -13,11 +13,10 @@
 #
 class windowmanager::gnome(
     $include_sec = true
-) inherits windowmanager {
+) {
+  validate_bool($include_sec)
 
-  if $include_sec {
-    include 'windowmanager::gnome::sec'
-  }
+  compliance_map()
 
   if ( versioncmp($::operatingsystemmajrelease, '6')  > 0 ) {
     $package_list = [
@@ -64,12 +63,21 @@ class windowmanager::gnome(
     ]
   }
 
-  # Basic useful packages
-  package { $package_list :
-      ensure => 'latest'
+  if !defined(Package['gdm']) {
+    package { 'gdm': ensure => latest }
   }
 
-  validate_bool($include_sec)
+  if $include_sec {
+    class {'windowmanager::gnome::sec':
+      require => Package['gdm'],
+    }
+  }
 
-  compliance_map()
+  # Basic useful packages
+  $package_list_require = $include_sec ? { true => Class['windowmanager::gnome::sec'], default => undef}
+
+  package { $package_list :
+    ensure  => 'latest',
+    require => $package_list_require,
+  }
 }
