@@ -1,11 +1,26 @@
 require 'spec_helper'
 
 describe 'windowmanager::gnome::sec' do
-
-  it { is_expected.to create_class('windowmanager::gnome::sec') }
-
-  it { is_expected.to contain_gconf('screensaver_enabled') }
-  it { is_expected.to contain_gconf('screensaver_timeout') }
-  it { is_expected.to contain_gconf('screensaver_lock') }
-
+context 'supported operating systems' do
+    on_supported_os.each do |os, facts|
+      context "on #{os}" do
+        let(:facts){ facts }
+        it { is_expected.to compile.with_all_deps }
+        if facts[:operatingsystemmajrelease].to_s <= '6'
+          it { is_expected.to create_class('windowmanager::gnome::sec') }
+          it { is_expected.to contain_gconf('screensaver_enabled') }
+          it { is_expected.to contain_gconf('screensaver_timeout') }
+          it { is_expected.to contain_gconf('screensaver_lock') }
+        end
+        context 'with gdm version < 3' do
+          let(:facts) { facts.merge( { :gdm_version => '2.0' } ) }
+          it { is_expected.to_not contain_class('windowmanager::gnome::dconf') }
+        end
+        context 'with gdm version >= 3' do
+          let(:facts) { facts.merge( { :gdm_version => '3.0' } ) }
+          it { is_expected.to contain_class('windowmanager::gnome::dconf') }
+        end
+      end
+    end
+  end
 end
