@@ -1,7 +1,7 @@
 Summary: Windowmanager Puppet Module
 Name: pupmod-windowmanager
-Version: 4.1.0
-Release: 3
+Version: 4.1.1
+Release: 0
 License: Apache License, Version 2.0
 Group: Applications/System
 Source: %{name}-%{version}-%{release}.tar.gz
@@ -58,6 +58,10 @@ fi
 # Post uninstall stuff
 
 %changelog
+* Tue Jun 7 2016 Ralph Wright <rwright@onyxpoint.com> - 4.1.1-0
+- Added dconf support
+- Added security settings using dconf
+
 * Tue Mar 01 2016 Ralph Wright <ralph.wright@onyxpoint.com> - 4.1.0-3
 - Added compliance function support
 
