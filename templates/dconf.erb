@@ -1,0 +1,11 @@
+<%
+if !@profile_list.include?(@profile) then
+   raise Puppet::ParseError.new(
+      "Error: You are using an undefined dconf profile"
+    )
+end
+  output = []
+  output << '[' + @path + ']'
+  output << @key + '=' + @value
+-%>
+<%= output.join("\n") %>
