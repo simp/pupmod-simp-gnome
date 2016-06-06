@@ -65,8 +65,10 @@ class windowmanager::gnome(
   }
 
   # Basic useful packages
+  $package_list_before = $include_sec ? { true => Class['windowmanager::gnome::sec'], default => undef}
   package { $package_list :
-      ensure => 'latest'
+    ensure => 'latest',
+    before => $package_list_before
   }
 
   validate_bool($include_sec)
