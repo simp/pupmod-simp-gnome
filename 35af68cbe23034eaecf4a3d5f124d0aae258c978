@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "baa041b7_42ad75e7",
+        "filename": "build/pupmod-windowmanager.spec",
+        "patchSetId": 1
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1005194
+      },
+      "writtenOn": "2016-06-08T19:27:27Z",
+      "side": 1,
+      "message": "Bump the minor version, not the release.",
+      "range": {
+        "startLine": 3,
+        "startChar": 12,
+        "endLine": 3,
+        "endChar": 14
+      },
+      "revId": "35af68cbe23034eaecf4a3d5f124d0aae258c978",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "baa041b7_e385ac59",
+        "filename": "manifests/gnome/dconf.pp",
+        "patchSetId": 1
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1005194
+      },
+      "writtenOn": "2016-06-08T19:27:27Z",
+      "side": 1,
+      "message": "Don\u0027t include",
+      "range": {
+        "startLine": 120,
+        "startChar": 0,
+        "endLine": 127,
+        "endChar": 4
+      },
+      "revId": "35af68cbe23034eaecf4a3d5f124d0aae258c978",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "baa041b7_e284895e",
+        "filename": "manifests/gnome/dconf.pp",
+        "patchSetId": 1
+      },
+      "lineNbr": 176,
+      "author": {
+        "id": 1005194
+      },
+      "writtenOn": "2016-06-08T19:27:27Z",
+      "side": 1,
+      "message": "ws",
+      "range": {
+        "startLine": 176,
+        "startChar": 53,
+        "endLine": 176,
+        "endChar": 55
+      },
+      "revId": "35af68cbe23034eaecf4a3d5f124d0aae258c978",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "baa041b7_a27a0175",
+        "filename": "manifests/gnome/sec.pp",
+        "patchSetId": 1
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1005194
+      },
+      "writtenOn": "2016-06-08T19:27:27Z",
+      "side": 1,
+      "message": "ws",
+      "range": {
+        "startLine": 36,
+        "startChar": 77,
+        "endLine": 36,
+        "endChar": 78
+      },
+      "revId": "35af68cbe23034eaecf4a3d5f124d0aae258c978",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": false
+    }
+  ]
+}
