@@ -1,0 +1,6 @@
+Requires: puppet >= 3.3.0
+Requires: pupmod-mozilla >= 2.0.0
+Requires: puppetlabs-stdlib >= 4.1.0
+Requires: simp-bootstrap >= 4.2.0
+Obsoletes: pupmod-windowmanager-test
+Requires: pupmod-simp-compliance_markup
