@@ -42,7 +42,7 @@ define windowmanager::gnome::dconf::add (
   validate_bool($lock)
 
 
-  include 'windowmanager::gnome::dconf'
+  include '::windowmanager::gnome::dconf'
   $profile_list = $::windowmanager::gnome::dconf::profile_list
   $target_file = "${base_dir}/${profile}.d/${name}"
   $dconf_lock = "/${path}/${key}"
