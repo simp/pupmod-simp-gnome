@@ -32,6 +32,6 @@ class windowmanager::gnome::sec {
 
   # If gdm is greater than 3, then we need to use dconf to secure the desktop
   if ( versioncmp($::gdm_version, '3') >= 0 ) {
-    include 'windowmanager::gnome::dconf'
+    include '::windowmanager::gnome::dconf'
   }
 }

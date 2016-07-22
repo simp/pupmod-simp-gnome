@@ -7,5 +7,5 @@
 # * Trevor Vaughan <tvaughan@onyxpoint.com>
 #
 class windowmanager {
-    include 'mozilla::firefox'
+    include '::mozilla::firefox'
 }

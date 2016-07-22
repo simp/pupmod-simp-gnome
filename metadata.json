@@ -1,6 +1,6 @@
 {
   "name":    "simp-windowmanager",
-  "version": "4.1.1",
+  "version": "4.1.2",
   "author":  "simp",
   "summary": "provides useful settings to set up various Window Managers.",
   "license": "Apache-2.0",
@@ -10,19 +10,11 @@
   "tags": [ "simp", "windowmanager", "gnome" ],
   "dependencies": [
     {
-      "name": "simp-auditd",
-      "version_requirement": ">= 4.1.0"
+      "name": "simp/mozilla",
+      "version_requirement": ">= 2.0.0"
     },
     {
-      "name": "simp-logrotate",
-      "version_requirement": ">= 4.1.0"
-    },
-    {
-      "name": "simp-rsyslog",
-      "version_requirement": ">= 5.0.0"
-    },
-    {
-      "name": "onyxpoint/compliance_markup",
+      "name": "simp/compliance_markup",
       "version_requirement": ">= 1.0.0"
     }
   ],

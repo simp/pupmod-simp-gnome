@@ -18,7 +18,7 @@ class windowmanager::gnome(
   validate_bool($include_sec)
 
   if $include_sec {
-    include 'windowmanager::gnome::sec'
+    include '::windowmanager::gnome::sec'
   }
 
   if ( versioncmp($::operatingsystemmajrelease, '6')  > 0 ) {
