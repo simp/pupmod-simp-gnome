@@ -1,21 +1,25 @@
 {
-  "name":    "simp-windowmanager",
+  "name": "simp-windowmanager",
   "version": "4.1.2",
-  "author":  "simp",
+  "author": "simp",
   "summary": "provides useful settings to set up various Window Managers.",
   "license": "Apache-2.0",
-  "source":  "https://github.com/simp/pupmod-simp-windowmanager",
+  "source": "https://github.com/simp/pupmod-simp-windowmanager",
   "project_page": "https://github.com/simp/pupmod-simp-windowmanager",
-  "issues_url":   "https://simp-project.atlassian.net",
-  "tags": [ "simp", "windowmanager", "gnome" ],
+  "issues_url": "https://simp-project.atlassian.net",
+  "tags": [
+    "simp",
+    "windowmanager",
+    "gnome"
+  ],
   "dependencies": [
     {
       "name": "simp/mozilla",
-      "version_requirement": ">= 2.0.0"
+      "version_requirement": ">= 4.1.1 < 5.0.0"
     },
     {
       "name": "simp/compliance_markup",
-      "version_requirement": ">= 1.0.0"
+      "version_requirement": ">= 1.0.1 < 2.0.0"
     }
   ],
   "operatingsystem_support": [
