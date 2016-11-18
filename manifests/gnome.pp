@@ -77,5 +77,4 @@ class windowmanager::gnome(
     before => $package_list_before
   }
 
-  compliance_map()
 }
