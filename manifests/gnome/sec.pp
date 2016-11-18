@@ -7,7 +7,6 @@
 # * Trevor Vaughan <tvaughan@onyxpoint.com>
 #
 class windowmanager::gnome::sec {
-  compliance_map()
 
   if ( versioncmp($::operatingsystemmajrelease, '6') > 0 ) {
     # TODO: Screensaver settings here
