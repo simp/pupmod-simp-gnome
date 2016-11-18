@@ -42,7 +42,6 @@ class windowmanager::gnome::dconf
   validate_string($banner)
   validate_array($profile_list)
 
-  compliance_map()
 
   file { $dir :
     ensure => 'directory',
