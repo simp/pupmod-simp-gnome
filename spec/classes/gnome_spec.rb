@@ -2,16 +2,16 @@ require 'spec_helper'
 
 describe 'windowmanager::gnome' do
 context 'supported operating systems' do
-    on_supported_os.each do |os, facts|
+    on_supported_os.each do |os, os_facts|
       context "on #{os}" do
-        let(:facts){ facts }
+        let(:facts) { os_facts.merge( { :gdm_version => '3.20.1' } ) }
 
         let(:params) { {:include_sec => true} }
 
         it { is_expected.to compile.with_all_deps }
         it { is_expected.to create_class('windowmanager::gnome') }
         it { is_expected.to contain_class('windowmanager::gnome::sec') }
-        if facts[:operatingsystemmajrelease].to_s > '6'
+        if os_facts[:operatingsystemmajrelease].to_s > '6'
           $package_list = [
             'alacarte',
             'at-spi2-atk',

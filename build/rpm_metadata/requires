@@ -1,5 +1,3 @@
 Obsoletes: pupmod-windowmanager-test
-Requires: pupmod-simp-compliance_markup < 3.0.0-0
-Requires: pupmod-simp-compliance_markup >= 2.0.0-0
 Requires: pupmod-simp-mozilla < 5.0.0-0
 Requires: pupmod-simp-mozilla >= 4.1.1-0
