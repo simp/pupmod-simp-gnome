@@ -1,3 +1,6 @@
+* Mon Nov 21 2016 Liz Nemsick <lnemsick.simp@gmail.com> - 4.1.4-0
+- Include gconf type removed from xwindows project.
+
 * Thu Jul 28 2016 Trevor Vaughan <tvaughan@onyxpoint.com> - 4.1.2-0
 - Corrected the scope include syntax
 
