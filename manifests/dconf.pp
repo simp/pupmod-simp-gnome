@@ -1,4 +1,4 @@
-# == Class: windowmanager::gnome::dconf
+# == Class: gnome::dconf
 #
 # Uses dconf to configure settings in gnome 3 and higher.
 #
@@ -24,7 +24,7 @@
 # * Ralph Wright <rwright@onyxpoint.com>
 #
 
-class windowmanager::gnome::dconf
+class gnome::dconf
 (
   # A list of profiles used to ensure the directories are created
   # Should probably add a check to ensure you can't use a profile value that is not first defined here.
@@ -68,7 +68,7 @@ class windowmanager::gnome::dconf
   # Everything below this sets the actual values we care about
 
   # Prevent mount points from being automatically created
-  windowmanager::gnome::dconf::add { 'automount':
+  gnome::dconf::add { 'automount':
     profile => 'simp',
     path    => 'org/gnome/desktop/media-handling',
     key     => 'automount',
@@ -76,7 +76,7 @@ class windowmanager::gnome::dconf
   }
 
   # Prevent automounted devices from opening automatically
-  windowmanager::gnome::dconf::add { 'automount_open':
+  gnome::dconf::add { 'automount_open':
     profile => 'simp',
     path    => 'org/gnome/desktop/media-handling',
     key     => 'automount-open',
@@ -84,7 +84,7 @@ class windowmanager::gnome::dconf
   }
 
   # Prevent automounted devices from executing automatically
-  windowmanager::gnome::dconf::add { 'autorun':
+  gnome::dconf::add { 'autorun':
     profile => 'simp',
     path    => 'org/gnome/desktop/media-handling',
     key     => 'autorun-never',
@@ -92,7 +92,7 @@ class windowmanager::gnome::dconf
   }
 
   # Ensures ctr-alt-del is not used for logout
-  windowmanager::gnome::dconf::add { 'ctrl_alt_del':
+  gnome::dconf::add { 'ctrl_alt_del':
     profile => 'simp',
     path    => 'org/gnome/settings-daemon/plugins/media-keys',
     key     => 'logout',
@@ -101,7 +101,7 @@ class windowmanager::gnome::dconf
   }
 
   # Removes Shutdown From Login Screen
-  windowmanager::gnome::dconf::add { 'shutdown_login_screen':
+  gnome::dconf::add { 'shutdown_login_screen':
     profile => 'simp',
     path    => 'org/gnome/login-screen',
     key     => 'disable-restart-buttons',
@@ -109,7 +109,7 @@ class windowmanager::gnome::dconf
   }
 
   # Ensure gnome does not react to the physical machine's power buttons
-  windowmanager::gnome::dconf::add { 'power_button_action':
+  gnome::dconf::add { 'power_button_action':
     profile => 'simp',
     path    => 'org/gnome/settings-daemon/plugins/power',
     key     => 'active',
@@ -117,7 +117,7 @@ class windowmanager::gnome::dconf
   }
 
   # Activate the idle timer
-  windowmanager::gnome::dconf::add { 'screen_saver_idle':
+  gnome::dconf::add { 'screen_saver_idle':
     profile => 'simp',
     path    => 'org/gnome/desktop/screensaver',
     key     => 'idle-activation-enabled',
@@ -125,7 +125,7 @@ class windowmanager::gnome::dconf
   }
 
   # Set the idle time to 15 minutes
-  windowmanager::gnome::dconf::add { 'screen_saver_idle_time':
+  gnome::dconf::add { 'screen_saver_idle_time':
     profile => 'simp',
     path    => 'org/gnome/desktop/session',
     key     => 'idle-delay',
@@ -134,7 +134,7 @@ class windowmanager::gnome::dconf
   }
 
   # Activate the lock
-  windowmanager::gnome::dconf::add { 'lock_enabled':
+  gnome::dconf::add { 'lock_enabled':
     profile => 'simp',
     path    => 'org/gnome/desktop/screensaver',
     key     => 'lock-enabled',
@@ -142,21 +142,21 @@ class windowmanager::gnome::dconf
   }
 
   # Ensure there is no delay in the screen lock
-  windowmanager::gnome::dconf::add { 'lock_delay':
+  gnome::dconf::add { 'lock_delay':
     profile => 'simp',
     path    => 'org/gnome/desktop/screensaver',
     key     => 'lock-delay',
     value   => '0'
   }
 
-  windowmanager::gnome::dconf::add { 'enable_banner':
+  gnome::dconf::add { 'enable_banner':
     profile =>  'gdm',
     path    =>  'org/gnome/login-screen',
     key     =>  'banner-message-enable',
     value   =>  true
   }
 
-  windowmanager::gnome::dconf::add { 'banner_text':
+  gnome::dconf::add { 'banner_text':
     profile =>  'gdm',
     path    =>  'org/gnome/login-screen',
     key     =>  'banner-message-text',
@@ -169,6 +169,6 @@ class windowmanager::gnome::dconf
     owner  => 'root',
     group  => 'root',
     mode   => '0644',
-    source => 'puppet:///modules/windowmanager/10-disable-shutdown-button.rules'
+    source => 'puppet:///modules/gnome/10-disable-shutdown-button.rules'
   }
 }

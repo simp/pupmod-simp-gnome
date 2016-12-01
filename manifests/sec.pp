@@ -1,4 +1,4 @@
-# == Class: windowmanager::gnome::sec
+# == Class: gnome::sec
 #
 # Some default tweaks for securing Gnome.
 #
@@ -6,7 +6,7 @@
 #
 # * Trevor Vaughan <tvaughan@onyxpoint.com>
 #
-class windowmanager::gnome::sec {
+class gnome::sec {
 
   if ( versioncmp($::operatingsystemmajrelease, '6') > 0 ) {
     # TODO: Screensaver settings here
@@ -31,6 +31,6 @@ class windowmanager::gnome::sec {
 
   # If gdm is greater than 3, then we need to use dconf to secure the desktop
   if ( versioncmp($::gdm_version, '3') >= 0 ) {
-    include '::windowmanager::gnome::dconf'
+    include '::gnome::dconf'
   }
 }

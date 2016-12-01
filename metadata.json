@@ -1,15 +1,14 @@
 {
-  "name": "simp-windowmanager",
-  "version": "5.0.0",
+  "name": "simp-gnome",
+  "version": "6.0.0",
   "author": "SIMP Team",
-  "summary": "provides useful settings to set up various Window Managers.",
+  "summary": "provides useful settings to set up GNOME.",
   "license": "Apache-2.0",
-  "source": "https://github.com/simp/pupmod-simp-windowmanager",
-  "project_page": "https://github.com/simp/pupmod-simp-windowmanager",
-  "issues_url": "https://simp-project.atlassian.net",
+  "source": "https://github.com/simp/pupmod-simp-gnome",
+  "project_page": "https://github.com/simp/pupmod-simp-gnome",
+  "issues_url": "https://github.com/simp/pupmod-simp-gnome/issues",
   "tags": [
     "simp",
-    "windowmanager",
     "gnome"
   ],
   "dependencies": [

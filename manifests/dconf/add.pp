@@ -1,4 +1,4 @@
-# == Define: windowmanager::gnome::dconf::add
+# == Define: gnome::dconf::add
 #
 # Add a dconf rule to the profile of your choice
 #
@@ -24,7 +24,7 @@
 # [*lock*]
 #  Boolean to lock the key from being changed by general users.
 
-define windowmanager::gnome::dconf::add (
+define gnome::dconf::add (
   $key,
   $value,
   $profile,
@@ -42,8 +42,8 @@ define windowmanager::gnome::dconf::add (
   validate_bool($lock)
 
 
-  include '::windowmanager::gnome::dconf'
-  $profile_list = $::windowmanager::gnome::dconf::profile_list
+  include '::gnome::dconf'
+  $profile_list = $::gnome::dconf::profile_list
   $target_file = "${base_dir}/${profile}.d/${name}"
   $dconf_lock = "/${path}/${key}"
   $dconf_lock_path = "${base_dir}/${profile}.d/locks"
@@ -53,7 +53,7 @@ define windowmanager::gnome::dconf::add (
     owner   => 'root',
     group   => 'root',
     mode    => '0640',
-    content => template('windowmanager/dconf.erb'),
+    content => template('gnome/dconf.erb'),
     notify  => Exec["dconf_update_${name}"]
   }
 

@@ -10,4 +10,4 @@ fixtures:
       branch: simp-master
     xwindows: https://github.com/simp/pupmod-simp-xwindows
   symlinks:
-    windowmanager: "#{source_dir}"
+    gnome: "#{source_dir}"
