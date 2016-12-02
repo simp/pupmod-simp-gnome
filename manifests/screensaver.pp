@@ -1,4 +1,4 @@
-# == Class: gnome::sec
+# == Class: gnome::screensaver
 #
 # Some default tweaks for securing Gnome.
 #
@@ -6,7 +6,7 @@
 #
 # * Trevor Vaughan <tvaughan@onyxpoint.com>
 #
-class gnome::sec {
+class gnome::screensaver {
 
   if ( versioncmp($::operatingsystemmajrelease, '6') > 0 ) {
     # TODO: Screensaver settings here

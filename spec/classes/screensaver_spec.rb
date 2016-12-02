@@ -1,13 +1,13 @@
 require 'spec_helper'
 
-describe 'gnome::sec' do
+describe 'gnome::screensaver' do
 context 'supported operating systems' do
     on_supported_os.each do |os, os_facts|
       context "on #{os}" do
         let(:facts) { os_facts.merge( { :gdm_version => '3.20.1' } ) }
         it { is_expected.to compile.with_all_deps }
         if os_facts[:operatingsystemmajrelease].to_s <= '6'
-          it { is_expected.to create_class('gnome::sec') }
+          it { is_expected.to create_class('gnome::screensaver') }
           it { is_expected.to contain_gconf('screensaver_enabled') }
           it { is_expected.to contain_gconf('screensaver_timeout') }
           it { is_expected.to contain_gconf('screensaver_lock') }

@@ -6,11 +6,11 @@ context 'supported operating systems' do
       context "on #{os}" do
         let(:facts) { os_facts.merge( { :gdm_version => '3.20.1' } ) }
 
-        let(:params) { {:include_sec => true} }
+        let(:params) { {:enable_screensaver => true} }
 
         it { is_expected.to compile.with_all_deps }
         it { is_expected.to create_class('gnome') }
-        it { is_expected.to contain_class('gnome::sec') }
+        it { is_expected.to contain_class('gnome::screensaver') }
         if os_facts[:operatingsystemmajrelease].to_s > '6'
           $package_list = [
             'alacarte',

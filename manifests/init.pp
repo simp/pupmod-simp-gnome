@@ -4,29 +4,22 @@
 #
 # == Parameters
 #
-# [*include_sec*]
-#   Whether or not to use the built-in sec class
-#
-# [*include_firefox*]
-#   Whether or not to include ::mozilla::firefox
+# [*enable_screensaver*]
+#   Boolean
+#   Whether or not to include gnome::screensaver
+#   Defaults to true.
 #
 # == Authors
 #
 # * Trevor Vaughan <tvaughan@onyxpoint.com>
 #
 class gnome(
-    $include_sec = true,
-    $include_firefox = true
+    $enable_screensaver = true,
 ) {
-  validate_bool($include_firefox)
-  validate_bool($include_sec)
+  validate_bool($enable_screensaver)
 
-  if $include_firefox {
-    include '::mozilla::firefox'
-  }
-
-  if $include_sec {
-    include '::gnome::sec'
+  if $enable_screensaver {
+    include '::gnome::screensaver'
   }
 
   if ( versioncmp($::operatingsystemmajrelease, '6')  > 0 ) {
@@ -79,7 +72,7 @@ class gnome(
   }
 
   # Basic useful packages
-  $package_list_before = $include_sec ? { true => Class['::gnome::sec'], default => undef}
+  $package_list_before = $enable_screensaver ? { true => Class['::gnome::screensaver'], default => undef}
   package { $package_list :
     ensure => 'latest',
     before => $package_list_before
