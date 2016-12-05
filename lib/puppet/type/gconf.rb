@@ -6,7 +6,7 @@ Puppet::Type.newtype(:gconf) do
 
   # This hash provides a mapping of short, easy-to-use names for common keys
   # that will be set within GConf
-  @@gc_keys = {
+  $gc_keys = {
     'screensaver_enabled'   => '/apps/gnome-screensaver/idle_activation_enabled',
     'screensaver_timeout'   => '/apps/gnome-screensaver/idle_delay',
     'screensaver_lock'      => '/apps/gnome-screensaver/lock_enabled',
@@ -16,7 +16,7 @@ Puppet::Type.newtype(:gconf) do
   }
 
   # This hash provides a set of precompiled matches for common gconf types.
-  @@res_types = {
+  $res_types = {
     :bool   => Regexp.new(/^(true|false)$/),
     :int    => Regexp.new(/^\d+$/),
     :float  => Regexp.new(/^\d+(\.\d+)?$/),
@@ -29,13 +29,13 @@ Puppet::Type.newtype(:gconf) do
     desc 'The short or complete name of the key in the GConf key-value pair.'
 
     validate do |value|
-      if not value[0].chr.eql?('/') and not @@gc_keys.keys.include?(value)
+      if not value[0].chr.eql?('/') and not $gc_keys.keys.include?(value)
         raise(Puppet::Error, "Gconf: Unknown GConf key '#{value}'")
       end
     end
 
     munge do |value|
-      @@gc_keys[value] or value
+      $gc_keys[value] or value
     end
   end
 
@@ -223,16 +223,16 @@ Puppet::Type.newtype(:gconf) do
     r_type = self[:type]
     case r_type
     when :int, :bool, :float, :string
-      !@@res_types[r_type].match("#{value.first}") and err_msg = "#{value.first.inspect} is not type '#{r_type}"
+      !$res_types[r_type].match("#{value.first}") and err_msg = "#{value.first.inspect} is not type '#{r_type}"
 
     when :list
       value.each do |val|
-        !@@res_types[self[:list_type].to_sym].match(val) and err_msg = "'#{val}' is not type '#{self[:list_type]}'"and break
+        !$res_types[self[:list_type].to_sym].match(val) and err_msg = "'#{val}' is not type '#{self[:list_type]}'"and break
       end
 
     when :pair
       [:car_type,:cdr_type].each_with_index do |c_type,i|
-        !@@res_types[self[c_type]].match(value[i]) and err_msg = "'#{value[i]}' is not type '#{self[c_type]}'" and break
+        !$res_types[self[c_type]].match(value[i]) and err_msg = "'#{value[i]}' is not type '#{self[c_type]}'" and break
       end
     else
       # Should never get here

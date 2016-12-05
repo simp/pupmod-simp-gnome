@@ -8,6 +8,5 @@ fixtures:
     stdlib:
       repo: https://github.com/simp/puppetlabs-stdlib
       branch: simp-master
-    xwindows: https://github.com/simp/pupmod-simp-xwindows
   symlinks:
     gnome: "#{source_dir}"
