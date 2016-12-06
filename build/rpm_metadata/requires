@@ -1,3 +1,5 @@
 Obsoletes: pupmod-windowmanager-test
+Obsoletes: pupmod-windowmanager > 5.0.0-0
+Provides: pupmod-simp-windowmanager
 Requires: pupmod-simp-mozilla < 6.0.0-0
 Requires: pupmod-simp-mozilla >= 5.0.0-0

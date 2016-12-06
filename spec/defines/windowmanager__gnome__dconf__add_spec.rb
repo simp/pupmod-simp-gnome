@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe 'windowmanager::gnome::dconf::add', :type => :define do
+describe 'gnome::dconf::add', :type => :define do
 context 'supported operating systems' do
     on_supported_os.each do |os, facts|
       context "on #{os}" do
