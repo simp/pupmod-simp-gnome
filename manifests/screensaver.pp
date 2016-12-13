@@ -1,10 +1,8 @@
-# == Class: gnome::screensaver
+# class gnome::screensaver
 #
 # Some default tweaks for securing Gnome.
 #
-# == Authors
-#
-# * Trevor Vaughan <tvaughan@onyxpoint.com>
+# @author Trevor Vaughan <tvaughan@onyxpoint.com>
 #
 class gnome::screensaver {
 
