@@ -1,4 +1,4 @@
-# == Define: gnome::dconf::add
+# define gnome::dconf::add
 #
 # Add a dconf rule to the profile of your choice
 #
@@ -6,42 +6,27 @@
 # The dconf datbase is updated when any rule is added.  You can also elect to
 # lock a value so that general users cannot change it.
 #
-# == Parameters
+# @param key The dconf key that is being set.
 #
-# [*path*]
-#   The dconf path to add the rule to.  You can use dconf dump to list the paths
-#   and keys that are available.
+# @param value The value of the dconf key
 #
-# [*key*]
-#   The dconf key that is being set.
+# @param profile The dconf profile where you want to place the key/value.
 #
-# [*value*]
-#  The value of the dconf key
+# @param path The dconf path to add the rule to.  You can use dconf dump to
+#   list the paths and keys that are available.
 #
-# [*profile*]
-#  The dconf profile where you want to place the key/value.
+# @param base_dir The database base directory
 #
-# [*lock*]
-#  Boolean to lock the key from being changed by general users.
+# @param lock Boolean to lock the key from being changed by general users.
 
 define gnome::dconf::add (
-  $key,
-  $value,
-  $profile,
-  $path,
-  $base_dir = '/etc/dconf/db',
-  $lock = true
+  String $key,
+  Variant[Boolean,String] $value,
+  String $profile,
+  String $path,
+  Stdlib::Absolutepath $base_dir = '/etc/dconf/db',
+  Boolean $lock = true
 ){
-  validate_string($path)
-  validate_string($key)
-  if !is_bool($value) {
-    validate_string($value)
-  }
-  validate_string($base_dir)
-  validate_string($profile)
-  validate_bool($lock)
-
-
   include '::gnome::dconf'
   $profile_list = $::gnome::dconf::profile_list
   $target_file = "${base_dir}/${profile}.d/${name}"

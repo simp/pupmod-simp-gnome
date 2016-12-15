@@ -1,22 +1,16 @@
-# == Class: gnome
+# class gnome
 #
 # Installs basic packages for gnome environment.
 #
 # == Parameters
 #
-# [*enable_screensaver*]
-#   Boolean
-#   Whether or not to include gnome::screensaver
-#   Defaults to true.
+# @param enable_screensaver Whether or not to include gnome::screensaver
 #
-# == Authors
-#
-# * Trevor Vaughan <tvaughan@onyxpoint.com>
+# @author Trevor Vaughan <tvaughan@onyxpoint.com>
 #
 class gnome(
-    $enable_screensaver = true,
+    Boolean $enable_screensaver = true,
 ) {
-  validate_bool($enable_screensaver)
 
   if $enable_screensaver {
     include '::gnome::screensaver'

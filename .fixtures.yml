@@ -1,12 +1,8 @@
 ---
 fixtures:
   repositories:
-    auditd: https://github.com/simp/pupmod-simp-auditd
-    iptables: https://github.com/simp/pupmod-simp-iptables
-    mozilla: https://github.com/simp/pupmod-simp-mozilla
-    simplib: https://github.com/simp/pupmod-simp-simplib
     stdlib:
       repo: https://github.com/simp/puppetlabs-stdlib
-      branch: simp-master
+      branch: master
   symlinks:
     gnome: "#{source_dir}"
