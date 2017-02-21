@@ -1,8 +1,4 @@
-# class gnome
-#
 # Installs basic packages for gnome environment.
-#
-# == Parameters
 #
 # @param enable_screensaver Whether or not to include gnome::screensaver
 #
@@ -66,7 +62,11 @@ class gnome(
   }
 
   # Basic useful packages
-  $package_list_before = $enable_screensaver ? { true => Class['::gnome::screensaver'], default => undef}
+  $package_list_before = $enable_screensaver ? {
+    true    => Class['::gnome::screensaver'],
+    default => undef
+  }
+
   package { $package_list :
     ensure => 'latest',
     before => $package_list_before

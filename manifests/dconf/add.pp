@@ -1,5 +1,3 @@
-# define gnome::dconf::add
-#
 # Add a dconf rule to the profile of your choice
 #
 # This adds a configuration file to the /etc/dconf/db/<profile>.d directory.
@@ -18,19 +16,20 @@
 # @param base_dir The database base directory
 #
 # @param lock Boolean to lock the key from being changed by general users.
-
+#
 define gnome::dconf::add (
-  String $key,
+  String                  $key,
   Variant[Boolean,String] $value,
-  String $profile,
-  String $path,
-  Stdlib::Absolutepath $base_dir = '/etc/dconf/db',
-  Boolean $lock = true
+  String                  $profile,
+  String                  $path,
+  Stdlib::Absolutepath    $base_dir = '/etc/dconf/db',
+  Boolean                 $lock = true
 ){
   include '::gnome::dconf'
-  $profile_list = $::gnome::dconf::profile_list
-  $target_file = "${base_dir}/${profile}.d/${name}"
-  $dconf_lock = "/${path}/${key}"
+
+  $profile_list    = $::gnome::dconf::profile_list
+  $target_file     = "${base_dir}/${profile}.d/${name}"
+  $dconf_lock      = "/${path}/${key}"
   $dconf_lock_path = "${base_dir}/${profile}.d/locks"
 
   file { $target_file :

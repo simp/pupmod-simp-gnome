@@ -1,12 +1,10 @@
-# class gnome::screensaver
-#
 # Some default tweaks for securing Gnome.
 #
 # @author Trevor Vaughan <tvaughan@onyxpoint.com>
 #
 class gnome::screensaver {
 
-  if ( versioncmp($::operatingsystemmajrelease, '6') > 0 ) {
+  if $facts['os']['release']['major'] == '6' {
     # TODO: Screensaver settings here
   } else {
     gconf { 'screensaver_enabled':
@@ -28,7 +26,9 @@ class gnome::screensaver {
   }
 
   # If gdm is greater than 3, then we need to use dconf to secure the desktop
-  if ( versioncmp($::gdm_version, '3') >= 0 ) {
+  # Also, the existance of the gdm_version fact needs to be checked, otherwise
+  #   compilation will fail
+  if $facts['gdm_version'] and ( versioncmp($facts['gdm_version'], '3') >= 0 ) {
     include '::gnome::dconf'
   }
 }
