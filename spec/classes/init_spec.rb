@@ -1,17 +1,20 @@
 require 'spec_helper'
 
 describe 'gnome' do
-context 'supported operating systems' do
+  context 'supported operating systems' do
     on_supported_os.each do |os, os_facts|
       context "on #{os}" do
-        let(:facts) { os_facts.merge( { :gdm_version => '3.20.1' } ) }
+        let(:facts) do
+          os_facts[:gdm_version] = '3.20.1'
+          os_facts
+        end
 
         let(:params) { {:enable_screensaver => true} }
 
         it { is_expected.to compile.with_all_deps }
         it { is_expected.to create_class('gnome') }
         it { is_expected.to contain_class('gnome::screensaver') }
-        if os_facts[:operatingsystemmajrelease].to_s > '6'
+        if os_facts[:os][:release][:major] == '6'
           $package_list = [
             'alacarte',
             'at-spi2-atk',
@@ -36,22 +39,10 @@ context 'supported operating systems' do
         else
           $package_list = [
             'alacarte',
-            'at-spi',
-            'control-center',
-            'gnome-applets',
-            'gnome-mag',
-            'gnome-panel',
-            'gnome-power-manager',
-            'gnome-screensaver',
-            'gnome-session',
-            'gnome-terminal',
-            'gnome-user-docs',
-            'gnome-utils',
+            'gnome-shell',
             'im-chooser',
             'nautilus',
-            'nautilus-open-terminal',
             'orca',
-            'sabayon-apply',
             'yelp'
           ]
         end
