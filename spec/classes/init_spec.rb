@@ -40,6 +40,8 @@ describe 'gnome' do
           $package_list = [
             'alacarte',
             'gnome-shell',
+            'gnome-session-xsession',
+            'gnome-terminal',
             'im-chooser',
             'nautilus',
             'orca',

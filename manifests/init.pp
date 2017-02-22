@@ -42,6 +42,7 @@ class gnome(
       'alacarte',
       'gnome-shell',
       'gnome-session-xsession',
+      'gnome-terminal',
       'im-chooser',
       'nautilus',
       'orca',
