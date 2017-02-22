@@ -41,6 +41,7 @@ class gnome(
     $package_list = [
       'alacarte',
       'gnome-shell',
+      'gnome-session-xsession',
       'im-chooser',
       'nautilus',
       'orca',
