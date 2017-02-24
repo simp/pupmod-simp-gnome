@@ -1,22 +1,21 @@
-# class gnome
-#
 # Installs basic packages for gnome environment.
-#
-# == Parameters
 #
 # @param enable_screensaver Whether or not to include gnome::screensaver
 #
 # @author Trevor Vaughan <tvaughan@onyxpoint.com>
 #
 class gnome(
-    Boolean $enable_screensaver = true,
+  Boolean $enable_screensaver = true,
 ) {
 
   if $enable_screensaver {
     include '::gnome::screensaver'
   }
 
-  if ( versioncmp($::operatingsystemmajrelease, '6')  > 0 ) {
+  # This should be a case statement using the gdm_version fact, but it will
+  # be left to toggle on major oc version to reduce the number of changes
+  # required on the second run of the module.
+  if $facts['os']['release']['major'] == '6' {
     $package_list = [
       'alacarte',
       'at-spi2-atk',
@@ -41,35 +40,29 @@ class gnome(
   } else {
     $package_list = [
       'alacarte',
-      'at-spi',
-      'control-center',
-      'gnome-applets',
-      'gnome-mag',
-      'gnome-panel',
-      'gnome-power-manager',
-      'gnome-screensaver',
-      'gnome-session',
+      'gnome-shell',
+      'gnome-session-xsession',
       'gnome-terminal',
-      'gnome-user-docs',
-      'gnome-utils',
       'im-chooser',
       'nautilus',
-      'nautilus-open-terminal',
       'orca',
-      'sabayon-apply',
       'yelp'
     ]
   }
 
-  if !defined(Package['gdm']) {
-    package { 'gdm': ensure => latest }
+  # Basic useful packages
+  $package_list_before = $enable_screensaver ? {
+    true    => Class['::gnome::screensaver'],
+    default => undef
   }
 
-  # Basic useful packages
-  $package_list_before = $enable_screensaver ? { true => Class['::gnome::screensaver'], default => undef}
   package { $package_list :
     ensure => 'latest',
     before => $package_list_before
+  }
+
+  if !defined(Package['gdm']) {
+    package { 'gdm': ensure => latest }
   }
 
 }

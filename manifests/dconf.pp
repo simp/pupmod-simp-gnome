@@ -1,9 +1,8 @@
-# gnome::dconf class
-#
 # Uses dconf to configure settings in gnome 3 and higher.
 #
-#
-# @param profile_list An array of dconf profiles
+# @param profile_list A list of profiles used to ensure the directories are
+#   created. Should probably add a check to ensure you can't use a profile
+#   value that is not first defined here.
 #
 # @param base The dconf directory.  This really shouldn't change.
 #
@@ -12,20 +11,16 @@
 #
 # @author Ralph Wright <rwright@onyxpoint.com>
 #
-
-class gnome::dconf
-(
-  # A list of profiles used to ensure the directories are created
-  # Should probably add a check to ensure you can't use a profile value that is not first defined here.
-  Array[String] $profile_list = ['simp','gdm'],
+class gnome::dconf (
+  Array[String]        $profile_list = ['simp','gdm'],
   Stdlib::Absolutepath $base = '/etc/dconf',
   # Fix the source of the content
   String $banner = "'--------------------------------- ATTENTION ----------------------------------\\n\\n                         THIS IS A RESTRICTED COMPUTER SYSTEM\\n\\nThis computer system, and all related equipment, networks, and\\nnetwork devices are provided for authorised use only.  All \\nsystems controlled by this organisation will be monitored for\\nall lawful purposes.  Monitoring includes the totality of the\\noperating system and connected networks.No events on this\\nsystem are excluded from record and there are no exclusions\\nfrom this policy.\\n\\nUse of this system constitutes consent to full monitoring of\\nyour activities for use by the authorised monitoring organisation.\\nUnauthorised use of this system, including uninvited connections,\\nmay subject you to criminal prosecution.\\n\\nThe data collected from this system may be used for any purpose by\\nthe collecting organisation.  If you do not agree to this\\nmonitoring, discontinue use of the system IMMEDIATELY.\\n\\n                         THIS IS A RESTRICTED COMPUTER SYSTEM\\n\\n--------------------------------- ATTENTION ----------------------------------'"
-){
+) {
 
   # Create an array of directories based on profile names
   $locks_dir = regsubst($profile_list, '^(.*)$', '/etc/dconf/db/\1.d/locks')
-  $dir = regsubst($profile_list, '^(.*)$', '/etc/dconf/db/\1.d')
+  $dir       = regsubst($profile_list, '^(.*)$', '/etc/dconf/db/\1.d')
 
   file { $dir :
     ensure => 'directory',
