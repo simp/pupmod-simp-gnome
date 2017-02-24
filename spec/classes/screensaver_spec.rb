@@ -19,12 +19,18 @@ context 'supported operating systems' do
         end
 
         context 'with gdm version < 3' do
-          let(:facts) { os_facts.merge( { :gdm_version => '2.0' } ) }
+          let(:facts) do
+            os_facts[:gdm_version] = '2.0'
+            os_facts
+          end
           it { is_expected.to_not contain_class('gnome::dconf') }
         end
 
         context 'with gdm version >= 3' do
-          let(:facts) { os_facts.merge( { :gdm_version => '3.0' } ) }
+          let(:facts) do
+            os_facts[:gdm_version] = '3.0'
+            os_facts
+          end
           it { is_expected.to contain_class('gnome::dconf') }
         end
 
