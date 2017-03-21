@@ -112,7 +112,7 @@ Puppet::Type.type(:gconf).provide(:ruby) do
       ''
     end
 
-    args += " --set -- #{resource[:key]} '#{resource[:value]}'"
+    args += " --set -- #{resource[:key]} '#{resource[:value].first}'"
 
     cmd = "/usr/bin/gconftool-2 #{args} 2>&1"
     Puppet.debug("Running Sync: #{cmd}")

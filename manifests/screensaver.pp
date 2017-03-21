@@ -4,9 +4,14 @@
 #
 class gnome::screensaver {
 
-  if $facts['os']['release']['major'] == '6' {
-    # TODO: Screensaver settings here
-  } else {
+  if $facts['gdm_version'] and ( versioncmp($facts['gdm_version'], '3') < 0 ) {
+    # gnome screen saver is not used past GDM version 3.  The screen saver was
+    # encorporated into gdm and dconf is used to configure it in later versions.
+
+    package { 'gnome-screensaver':
+      ensure => latest,
+    }
+
     gconf { 'screensaver_enabled':
       value  => true,
       type   => 'bool',
@@ -23,12 +28,8 @@ class gnome::screensaver {
       type   => 'bool',
       schema => 'mandatory',
     }
-  }
-
+  } else {
   # If gdm is greater than 3, then we need to use dconf to secure the desktop
-  # Also, the existance of the gdm_version fact needs to be checked, otherwise
-  #   compilation will fail
-  if $facts['gdm_version'] and ( versioncmp($facts['gdm_version'], '3') >= 0 ) {
     include '::gnome::dconf'
   }
 }
