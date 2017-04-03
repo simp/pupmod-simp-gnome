@@ -174,7 +174,7 @@ Puppet::Type.newtype(:gconf) do
     end
 
     def insync?(is)
-      is.to_s == @should.to_s
+      (Array(is).map(&:to_s) - Array(@should).map(&:to_s)).empty?
     end
 
     def sync
