@@ -14,36 +14,36 @@ describe 'gnome' do
         it { is_expected.to compile.with_all_deps }
         it { is_expected.to create_class('gnome') }
         it { is_expected.to contain_class('gnome::screensaver') }
-        if os_facts[:os][:release][:major] == '6'
+        if os_facts[:os][:release][:major] >= '7'
           $package_list = [
             'alacarte',
             'at-spi2-atk',
             'control-center',
-            'gnome-backgrounds',
-            'gnome-color-manager',
-            'gnome-classic-session',
             'gnome-desktop3',
             'gnome-session',
             'gnome-session-xsession',
-            'gnome-settings-daemon',
             'gnome-terminal',
+            'gnome-user-docs',
             'im-chooser',
             'libgnome',
             'libgnomeui',
-            'metacity',
             'nautilus',
-            'nautilus-open-terminal',
             'orca',
             'yelp',
           ]
         else
           $package_list = [
             'alacarte',
-            'gnome-shell',
+            'at-spi',
+            'gnome-panel',
+            'gnome-session',
             'gnome-session-xsession',
             'gnome-terminal',
             'im-chooser',
+            'libgnome',
+            'libgnomeui',
             'nautilus',
+            'nautilus-open-terminal',
             'orca',
             'yelp'
           ]

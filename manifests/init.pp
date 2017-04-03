@@ -15,36 +15,39 @@ class gnome(
   # This should be a case statement using the gdm_version fact, but it will
   # be left to toggle on major oc version to reduce the number of changes
   # required on the second run of the module.
-  if $facts['os']['release']['major'] == '6' {
+  if $facts['os']['release']['major'] >= '7' {
     $package_list = [
       'alacarte',
       'at-spi2-atk',
       'control-center',
-      'gnome-backgrounds',
-      'gnome-color-manager',
-      'gnome-classic-session',
       'gnome-desktop3',
       'gnome-session',
       'gnome-session-xsession',
       'gnome-settings-daemon',
       'gnome-terminal',
+      'gnome-user-docs',
       'im-chooser',
       'libgnome',
       'libgnomeui',
-      'metacity',
       'nautilus',
-      'nautilus-open-terminal',
       'orca',
       'yelp',
     ]
   } else {
     $package_list = [
       'alacarte',
-      'gnome-shell',
+      'at-spi',
+      'gnome-panel',
+      'gnome-session',
       'gnome-session-xsession',
+      'gnome-settings-daemon',
       'gnome-terminal',
+      'gnome-user-docs',
       'im-chooser',
+      'libgnome',
+      'libgnomeui',
       'nautilus',
+      'nautilus-open-terminal',
       'orca',
       'yelp'
     ]

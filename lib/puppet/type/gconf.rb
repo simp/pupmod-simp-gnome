@@ -29,7 +29,7 @@ Puppet::Type.newtype(:gconf) do
     desc 'The short or complete name of the key in the GConf key-value pair.'
 
     validate do |value|
-      if not value[0].chr.eql?('/') and not $gconf_keys.keys.include?(value)
+      unless ( value[0].chr.eql?('/') or $gconf_keys.keys.include?(value) )
         raise(Puppet::Error, "Gconf: Unknown GConf key '#{value}'")
       end
     end
@@ -49,7 +49,7 @@ Puppet::Type.newtype(:gconf) do
     newvalues(:string,:bool,:int,:float)
 
     validate do |value|
-      resource[:list_type] and raise(Puppet::Error,"You cannot set both 'list_type' and 'car_type'")
+      resource[:list_type] && raise(Puppet::Error,"You cannot set both 'list_type' and 'car_type'")
     end
   end
 
@@ -58,7 +58,7 @@ Puppet::Type.newtype(:gconf) do
     newvalues(:string,:bool,:int,:float)
 
     validate do |value|
-      resource[:list_type] and raise(Puppet::Error,"You cannot set both 'list_type' and 'cdr_type'")
+      resource[:list_type] && raise(Puppet::Error,"You cannot set both 'list_type' and 'cdr_type'")
     end
   end
 
@@ -98,7 +98,7 @@ Puppet::Type.newtype(:gconf) do
     defaultto :var
 
     validate do |value|
-      if value == :file and not resource[:type] == :string then
+      if ( value == :file && resource[:type] != :string )
         raise(Puppet::Error, "'source' cannot be 'file' if 'type' is not 'string'")
       end
     end
@@ -136,9 +136,9 @@ Puppet::Type.newtype(:gconf) do
 
     def retrieve
       # Have to do munging here since it relies on the 'type' parameter.
-      if resource[:source].eql?(:file) then
+      if resource[:source].eql?(:file)
         src_file = resource[:value].first
-        if not File.readable?(src_file) then
+        unless File.readable?(src_file)
           raise(Puppet::Error, "Unable to read file '#{src_file}'")
         else
           @should = Array(File.open(src_file).read.strip)
@@ -174,7 +174,7 @@ Puppet::Type.newtype(:gconf) do
     end
 
     def insync?(is)
-      is == @should.to_s
+      (Array(is).map(&:to_s) - Array(@should).map(&:to_s)).empty?
     end
 
     def sync
@@ -185,7 +185,7 @@ Puppet::Type.newtype(:gconf) do
   # Autorequires
   autorequire(:file) do
     to_req = []
-    if self[:source] == :file then
+    if ( self[:source] == :file )
       to_req << "File[#{self[:value]}]"
     end
 
@@ -194,7 +194,7 @@ Puppet::Type.newtype(:gconf) do
 
   # Global Validation
   validate do
-    self[:ensure] == :absent and break
+    break if (self[:ensure] == :absent)
 
     required_params = [
       :value,
@@ -202,20 +202,20 @@ Puppet::Type.newtype(:gconf) do
     ]
 
     required_params.each do |param|
-      self[param] or raise(Puppet::Error, "Gconf: Missing required parameter: #{param}")
+      raise(Puppet::Error, "Gconf: Missing required parameter: #{param}") unless self[param]
     end
 
     case self[:type]
     when :pair
-        self[:car_type].nil? or self[:cdr_type].nil? and raise(Puppet::Error,"You must specify both 'cdr_type' and 'car_type' for type 'pair'")
+      ( self[:cdr_type].nil? && raise(Puppet::Error,"You must specify both 'cdr_type' and 'car_type' for type 'pair'") ) if self[:car_type].nil?
     when :list
-        self[:list_type].nil? and raise(Puppet::Error,"You must specify 'list_type' for type 'list'")
+      raise(Puppet::Error,"You must specify 'list_type' for type 'list'") if self[:list_type].nil?
     end
 
     # This is the validation for the 'value' property but properties get parsed before parameters so we're doing it here.
     value = self[:value]
     # Pairs must have exactly two items.
-    self[:type] == 'pair' and Array(value).length != 2 and raise(Puppet::Error,"Pairs must have two items")
+    raise(Puppet::Error,"Pairs must have two items") if ( self[:type] == 'pair' && (Array(value).length != 2) )
 
     # Now, check that everything actually makes sense.
     err_msg = nil
@@ -223,22 +223,22 @@ Puppet::Type.newtype(:gconf) do
     r_type = self[:type]
     case r_type
     when :int, :bool, :float, :string
-      !$gconf_type_regexps[r_type].match("#{value.first}") and err_msg = "#{value.first.inspect} is not type '#{r_type}"
+      err_msg = "#{value.first.inspect} is not type '#{r_type}" if !$gconf_type_regexps[r_type].match("#{value.first}")
 
     when :list
       value.each do |val|
-        !$gconf_type_regexps[self[:list_type].to_sym].match(val) and err_msg = "'#{val}' is not type '#{self[:list_type]}'"and break
+        break if ( !$gconf_type_regexps[self[:list_type].to_sym].match(val) && err_msg = "'#{val}' is not type '#{self[:list_type]}'" )
       end
 
     when :pair
       [:car_type,:cdr_type].each_with_index do |c_type,i|
-        !$gconf_type_regexps[self[c_type]].match(value[i]) and err_msg = "'#{value[i]}' is not type '#{self[c_type]}'" and break
+        break if ( !$gconf_type_regexps[self[c_type]].match(value[i]) && err_msg = "'#{value[i]}' is not type '#{self[c_type]}'" )
       end
     else
       # Should never get here
       raise(Puppet::Error,"Unknown resource type '#{r_type}'")
     end
 
-    err_msg and raise(Puppet::Error,err_msg)
+    raise(Puppet::Error,err_msg) if err_msg
   end
 end
