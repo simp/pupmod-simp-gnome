@@ -2,14 +2,14 @@ Puppet::Type.type(:gconf).provide(:ruby) do
   require 'shellwords'
 
   def lookup(schema, key)
-    if resource[:force] == :false then
+    if resource[:force] == :false
       # Lookup a value. Throw away any garbage from gconftool-2.
       schema_args = "--direct --config-source xml:readonly:/etc/gconf/gconf.xml.defaults --get '/schemas#{key}'"
 
       # Cheking the schema
       cmd = "/usr/bin/gconftool-2 #{schema_args} 2>&1"
       Puppet.debug("Running lookup: #{cmd}")
-      if %x{#{cmd}} !~ /Type:/ then
+      if %x{#{cmd}} !~ /Type:/
         raise(Puppet::Error,"Gconf: Could not find '#{key}' in the gconf schemas.")
       end
     end
@@ -17,6 +17,7 @@ Puppet::Type.type(:gconf).provide(:ruby) do
     args = "--direct --config-source 'xml:readonly:/etc/gconf/gconf.xml.#{schema}' --get '#{key}'"
       cmd = "/usr/bin/gconftool-2 #{args} 2>&1"
       Puppet.debug("Running lookup2: #{cmd}")
+
     return %x{#{cmd}}.strip.split("\n").delete_if{|x| x.include?('(gconftool-2:')}.join("\n")
   end
 
@@ -32,7 +33,7 @@ Puppet::Type.type(:gconf).provide(:ruby) do
           '--config-source ' +
           "'xml:readwrite:/etc/gconf/gconf.xml.#{resource[:schema]}' "
 
-    if resource[:recurse] == :true then
+    if resource[:recurse] == :true
       cmd += '--recursive-unset '
     else
       cmd += '--unset '
@@ -44,14 +45,14 @@ Puppet::Type.type(:gconf).provide(:ruby) do
     old_umask = File.umask(022)
     output = %x{#{cmd}}
     File.umask(old_umask)
-    if not $?.success? then
+    unless $?.success?
       raise(Puppet::Error,"Could not unset #{resource[:key]}: #{output}")
     end
   end
 
   def exists?
-    if self.retrieve.nil? then
-      if resource[:recurse] == :true then
+    if self.retrieve.nil?
+      if resource[:recurse] == :true
         cmd = '/usr/bin/gconftool-2 ' +
               '--direct ' +
               '--config-source ' +
@@ -68,7 +69,7 @@ Puppet::Type.type(:gconf).provide(:ruby) do
           y and !y.empty? and rhs << y
         end
 
-        if !rhs.empty? then
+        if !rhs.empty?
           return true
         end
       end
@@ -85,7 +86,7 @@ Puppet::Type.type(:gconf).provide(:ruby) do
         value.include?('No value set for') or
         value.strip == "[]" or
         value.strip == "()"
-    then
+
       return false
     end
 
@@ -95,9 +96,11 @@ Puppet::Type.type(:gconf).provide(:ruby) do
   def retrieve
     value = lookup(resource[:schema], resource[:key])
 
-    self.valid_value?(value) and return value
-
-    return ''
+    if self.valid_value?(value)
+      return value
+    else
+      return ''
+    end
   end
 
   def sync
@@ -119,7 +122,7 @@ Puppet::Type.type(:gconf).provide(:ruby) do
     old_umask = File.umask(022)
     output = %x{#{cmd}}
     File.umask(old_umask)
-    if not $?.success? then
+    unless $?.success?
       raise(Puppet::Error,"Gconf: Command: /usr/bin/gconftool-2 #{args} 2>&1 failed: Error: #{output.chomp.split("\n").last}")
     end
   end
