@@ -1,6 +1,6 @@
 {
   "name": "simp-gnome",
-  "version": "6.0.2",
+  "version": "6.0.3",
   "author": "SIMP Team",
   "summary": "provides useful settings to set up GNOME.",
   "license": "Apache-2.0",
@@ -15,6 +15,10 @@
     {
       "name": "simp/mozilla",
       "version_requirement": ">= 5.0.0 < 6.0.0"
+    },
+    {
+      "name": "simp/polkit",
+      "version_requirement": ">= 6.1.0 < 7.0.0"
     },
     {
       "name": "puppetlabs/stdlib",
@@ -35,6 +39,12 @@
         "6",
         "7"
       ]
+    }
+  ],
+  "requirements": [
+    {
+      "name": "puppet",
+      "version_requirement": ">= 4.6.0 < 5.0.0"
     }
   ]
 }
