@@ -27,7 +27,7 @@ class gnome::dconf (
       network devices are provided for authorised use only.  All
       systems controlled by this organisation will be monitored for
       all lawful purposes.  Monitoring includes the totality of the
-      operating system and connected networks.No events on this
+      operating system and connected networks.  No events on this
       system are excluded from record and there are no exclusions
       from this policy.
 

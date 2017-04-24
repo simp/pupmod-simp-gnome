@@ -4,8 +4,9 @@
 #
 # @author Trevor Vaughan <tvaughan@onyxpoint.com>
 #
-class gnome(
+class gnome (
   Boolean $enable_screensaver = true,
+  String  $package_ensure     = simplib::lookup('simp_options::package_ensure', { 'default_value' => 'installed' })
 ) {
 
   if $enable_screensaver {
@@ -60,12 +61,12 @@ class gnome(
   }
 
   package { $package_list :
-    ensure => 'latest',
+    ensure => $package_ensure,
     before => $package_list_before
   }
 
   if !defined(Package['gdm']) {
-    package { 'gdm': ensure => latest }
+    package { 'gdm': ensure => $package_ensure }
   }
 
 }
