@@ -13,22 +13,44 @@
 #
 class gnome::dconf (
   Array[String]        $profile_list = ['simp','gdm'],
-  Stdlib::Absolutepath $base = '/etc/dconf',
-  # Fix the source of the content
-  String               $banner = "'--------------------------------- ATTENTION ----------------------------------\\n\\n                         THIS IS A RESTRICTED COMPUTER SYSTEM\\n\\nThis computer system, and all related equipment, networks, and\\nnetwork devices are provided for authorised use only.  All \\nsystems controlled by this organisation will be monitored for\\nall lawful purposes.  Monitoring includes the totality of the\\noperating system and connected networks.No events on this\\nsystem are excluded from record and there are no exclusions\\nfrom this policy.\\n\\nUse of this system constitutes consent to full monitoring of\\nyour activities for use by the authorised monitoring organisation.\\nUnauthorised use of this system, including uninvited connections,\\nmay subject you to criminal prosecution.\\n\\nThe data collected from this system may be used for any purpose by\\nthe collecting organisation.  If you do not agree to this\\nmonitoring, discontinue use of the system IMMEDIATELY.\\n\\n                         THIS IS A RESTRICTED COMPUTER SYSTEM\\n\\n--------------------------------- ATTENTION ----------------------------------'"
+  Stdlib::Absolutepath $base         = '/etc/dconf',
+  Optional[String]     $banner       = undef
 ) {
+  $_banner = $banner ? {
+    String  => $banner,
+    default => @(EOF)
+      --------------------------------- ATTENTION ----------------------------------
+
+                               THIS IS A RESTRICTED COMPUTER SYSTEM
+
+      This computer system, and all related equipment, networks, and
+      network devices are provided for authorised use only.  All
+      systems controlled by this organisation will be monitored for
+      all lawful purposes.  Monitoring includes the totality of the
+      operating system and connected networks.  No events on this
+      system are excluded from record and there are no exclusions
+      from this policy.
+
+      Use of this system constitutes consent to full monitoring of
+      your activities for use by the authorised monitoring organisation.
+      Unauthorised use of this system, including uninvited connections,
+      may subject you to criminal prosecution.
+
+      The data collected from this system may be used for any purpose by
+      the collecting organisation.  If you do not agree to this
+      monitoring, discontinue use of the system IMMEDIATELY.
+
+                               THIS IS A RESTRICTED COMPUTER SYSTEM
+
+      --------------------------------- ATTENTION ----------------------------------
+      |EOF
+  }
 
   # Create an array of directories based on profile names
-  $locks_dir = regsubst($profile_list, '^(.*)$', '/etc/dconf/db/\1.d/locks')
-  $dir       = regsubst($profile_list, '^(.*)$', '/etc/dconf/db/\1.d')
+  $_dir       = $profile_list.map |$profile| { "/etc/dconf/db/${profile}.d" }
+  $_locks_dir = $profile_list.map |$profile| { "/etc/dconf/db/${profile}.d/locks" }
 
-  file { $dir :
-    ensure => 'directory',
-    owner  => 'root',
-    group  => 'root',
-    mode   => '0644'
-  }
-  file { $locks_dir :
+  file { $_dir + $_locks_dir :
     ensure => 'directory',
     owner  => 'root',
     group  => 'root',
@@ -139,15 +161,25 @@ class gnome::dconf (
     profile =>  'gdm',
     path    =>  'org/gnome/login-screen',
     key     =>  'banner-message-text',
-    value   =>  $banner
+    value   =>  $_banner
   }
 
-  # The shutdown button can't be controlled by Dconf.
-  # Use this file type for now to disable it until the policykit module can support the rules.d and javascript methods.
-  file { '/etc/polkit-1/rules.d/10-disable-shutdown-button.rules':
-    owner  => 'root',
-    group  => 'root',
-    mode   => '0644',
-    source => 'puppet:///modules/gnome/10-disable-shutdown-button.rules'
+  if $facts['os']['release']['major'] >= '7' {
+    $_policy_defaults = {
+      ensure   => present,
+      priority => 10,
+      result   => 'yes'
+    }
+
+    polkit::authorization::basic_policy {
+      default:
+        * => $_policy_defaults;
+
+      'Allow anyone to shutdown system':
+        action_id => 'org.freedesktop.consolekit.system.stop';
+
+      'Allow anyone to restart system':
+        action_id => 'org.freedesktop.consolekit.system.restart';
+    }
   }
 }

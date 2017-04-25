@@ -1,8 +1,8 @@
 ---
 fixtures:
   repositories:
-    stdlib:
-      repo: https://github.com/simp/puppetlabs-stdlib
-      branch: master
+    polkit: https://github.com/simp/pupmod-simp-polkit
+    simplib: https://github.com/simp/pupmod-simp-simplib
+    stdlib: https://github.com/simp/puppetlabs-stdlib
   symlinks:
     gnome: "#{source_dir}"

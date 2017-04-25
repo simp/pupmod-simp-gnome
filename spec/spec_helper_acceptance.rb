@@ -28,11 +28,8 @@ RSpec.configure do |c|
     begin
       # Install modules and dependencies from spec/fixtures/modules
       copy_fixture_modules_to( hosts )
-     begin
-        server = only_host_with_role(hosts, 'server')
-      rescue ArgumentError =>e
-        server = only_host_with_role(hosts, 'default')
-      end
+      server = only_host_with_role(hosts, 'server')
+
       # Generate and install PKI certificates on each SUT
       Dir.mktmpdir do |cert_dir|
         run_fake_pki_ca_on(server, hosts, cert_dir )
