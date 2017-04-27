@@ -164,6 +164,13 @@ class gnome::dconf (
     value   =>  $_banner
   }
 
+  gnome::dconf::add { 'donot_display_users':
+    profile => 'gdm',
+    path    => 'org/gnome/login-screen',
+    key     => 'disable-user-list',
+    value   => true,
+  }
+
   if $facts['os']['release']['major'] >= '7' {
     $_policy_defaults = {
       ensure   => present,

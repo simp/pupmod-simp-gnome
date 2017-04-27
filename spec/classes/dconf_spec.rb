@@ -31,7 +31,8 @@ describe 'gnome::dconf' do
           'screen_saver_idle_time',
           'lock_enabled',
           'lock_delay',
-          'banner_text'
+          'banner_text',
+          'donot_display_users'
         ].each do |dconf|
           it { is_expected.to create_gnome__dconf__add(dconf) }
         end

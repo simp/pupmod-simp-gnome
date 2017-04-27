@@ -1,3 +1,6 @@
+* Thu Apr 27 2017 Jeanne Greulich <jeanne.greulich@onyxpoint.com> - 6.0.3-0
+- Add dconf rule to not display user lists
+
 * Mon Apr 17 2017 Nick Miller <nick.miller@onyxpoint.com> - 6.0.3-0
 - Updated polkit setting to use the new defined type from the polkit module
 - Added polkit dependency
