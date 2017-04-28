@@ -165,7 +165,7 @@ class gnome::dconf (
   }
 
   gnome::dconf::add { 'donot_display_users':
-    profile => 'gdm',
+    profile => 'simp',
     path    => 'org/gnome/login-screen',
     key     => 'disable-user-list',
     value   => true,
