@@ -54,8 +54,10 @@ define gnome::dconf::add (
   # Ensure the lock file is removed if lock is set to false
   else { file { "${dconf_lock_path}/${name}" : ensure => absent}}
 
+  # `dconf update` doesn't return an exit code, so we have to make one
+  # if the command returns output, it failed
   exec {"dconf_update_${name}":
-    command     => '/bin/dconf update',
+    command     => '/bin/dconf update |& wc -c | grep ^0$',
     umask       => '0033',
     refreshonly => true
   }
