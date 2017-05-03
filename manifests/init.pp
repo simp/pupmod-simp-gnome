@@ -1,72 +1,40 @@
 # Installs basic packages for gnome environment.
 #
-# @param enable_screensaver Whether or not to include gnome::screensaver
+# @param set_banner If true, set the banner seen at the login screen.
+# @param banner The banner to set if $set_banner is true.
+# @param configure If false, no Gnome settings will be touched.
+# @param gconf_hash Settings specific to gconf and Gnome 2.
+#   @see data/common.yaml:76
+# @param dconf_hash Settings specific to dcofn and Gnome 3.
+#   @see data/common.yaml:33
+# @param dconf_profile_hierarchy Dconf db priority
+#   @see https://help.gnome.org/admin/system-admin-guide/stable/dconf.html.en
+# @param packages A hash of packages to be installed on the system. The ensure
+#   value can be set in the hash of each package, like the example below:
 #
-# @author Trevor Vaughan <tvaughan@onyxpoint.com>
+#   ```
+#   { 'gedit' => { 'ensure' => '3.14.3' } }
+#   ```
+#
+# @param package_ensure The SIMP global catalyst to set the default `ensure` settings
+#   for packages managed wit this module. Will be overwitten by $packages.
 #
 class gnome (
-  Boolean $enable_screensaver = true,
-  String  $package_ensure     = simplib::lookup('simp_options::package_ensure', { 'default_value' => 'installed' })
+  Boolean $configure,
+  Boolean $set_banner,
+  String $banner,
+  Gnome::Gconf $gconf_hash,
+  Gnome::Dconf $dconf_hash,
+  Gnome::Dconfdb $dconf_profile_hierarchy,
+  Hash[String,Optional[Hash]] $packages,
+  String $package_ensure = simplib::lookup('simp_options::package_ensure', { 'default_value' => 'installed' })
 ) {
 
-  if $enable_screensaver {
-    include '::gnome::screensaver'
-  }
+  include 'gnome::install'
 
-  # This should be a case statement using the gdm_version fact, but it will
-  # be left to toggle on major oc version to reduce the number of changes
-  # required on the second run of the module.
-  if $facts['os']['release']['major'] >= '7' {
-    $package_list = [
-      'alacarte',
-      'at-spi2-atk',
-      'control-center',
-      'gnome-desktop3',
-      'gnome-session',
-      'gnome-session-xsession',
-      'gnome-settings-daemon',
-      'gnome-terminal',
-      'gnome-user-docs',
-      'im-chooser',
-      'libgnome',
-      'libgnomeui',
-      'nautilus',
-      'orca',
-      'yelp',
-    ]
-  } else {
-    $package_list = [
-      'alacarte',
-      'at-spi',
-      'gnome-panel',
-      'gnome-session',
-      'gnome-session-xsession',
-      'gnome-settings-daemon',
-      'gnome-terminal',
-      'gnome-user-docs',
-      'im-chooser',
-      'libgnome',
-      'libgnomeui',
-      'nautilus',
-      'nautilus-open-terminal',
-      'orca',
-      'yelp'
-    ]
-  }
-
-  # Basic useful packages
-  $package_list_before = $enable_screensaver ? {
-    true    => Class['::gnome::screensaver'],
-    default => undef
-  }
-
-  package { $package_list :
-    ensure => $package_ensure,
-    before => $package_list_before
-  }
-
-  if !defined(Package['gdm']) {
-    package { 'gdm': ensure => $package_ensure }
+  if $configure {
+    include 'gnome::config'
+    Class['gnome::install'] -> Class['gnome::config']
   }
 
 }

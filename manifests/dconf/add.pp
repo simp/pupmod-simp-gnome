@@ -1,3 +1,6 @@
+# WARNING: THIS DEFINE IS DEPRECATED
+#   It has been superceded by gnome::config::dconf
+#
 # Add a dconf rule to the profile of your choice
 #
 # This adds a configuration file to the /etc/dconf/db/<profile>.d directory.
@@ -18,47 +21,29 @@
 # @param lock Boolean to lock the key from being changed by general users.
 #
 define gnome::dconf::add (
-  String                  $key,
-  Variant[Boolean,String] $value,
-  String                  $profile,
-  String                  $path,
-  Stdlib::Absolutepath    $base_dir = '/etc/dconf/db',
-  Boolean                 $lock = true
+  String $key,
+  Variant[Boolean,String,Integer] $value,
+  String $profile,
+  String $path,
+  Stdlib::Absolutepath $base_dir = '/etc/dconf/db',
+  Boolean $lock = true
 ){
-  include '::gnome::dconf'
+  deprecation('gnome::dconf::add is a shim for gnome::config::dconf and will be removed in a future version')
 
-  $profile_list    = $::gnome::dconf::profile_list
-  $target_file     = "${base_dir}/${profile}.d/${name}"
-  $dconf_lock      = "/${path}/${key}"
-  $dconf_lock_path = "${base_dir}/${profile}.d/locks"
-
-  file { $target_file :
-    ensure  => 'file',
-    owner   => 'root',
-    group   => 'root',
-    mode    => '0640',
-    content => template('gnome/dconf.erb'),
-    notify  => Exec["dconf_update_${name}"]
-  }
-
-  if $lock {
-    file { "${dconf_lock_path}/${name}" :
-      ensure  => 'file',
-      owner   => 'root',
-      group   => 'root',
-      mode    => '0640',
-      content => $dconf_lock,
-      notify  => Exec["dconf_update_${name}"]
+  $_settings_hash = {
+    $key => {
+      'value' => $value,
+      'lock'  => $lock
     }
   }
-  # Ensure the lock file is removed if lock is set to false
-  else { file { "${dconf_lock_path}/${name}" : ensure => absent}}
 
-  # `dconf update` doesn't return an exit code, so we have to make one
-  # if the command returns output, it failed
-  exec {"dconf_update_${name}":
-    command     => '/bin/dconf update |& wc -c | grep ^0$',
-    umask       => '0033',
-    refreshonly => true
+  gnome::config::dconf { $name:
+    ensure        => present,
+    profile       => $profile,
+    settings_hash => $_settings_hash,
+    path          => $path,
+    base_dir      => $base_dir,
+    lock          => $lock
   }
+
 }

@@ -1,6 +1,7 @@
 ---
 fixtures:
   repositories:
+    inifile: https://github.com/simp/puppetlabs-inifile
     polkit: https://github.com/simp/pupmod-simp-polkit
     simplib: https://github.com/simp/pupmod-simp-simplib
     stdlib: https://github.com/simp/puppetlabs-stdlib

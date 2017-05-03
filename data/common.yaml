@@ -1,0 +1,114 @@
+---
+lookup_options:
+  '^gnome::(d|g)conf_hash$':
+    merge:
+      strategy: deep
+      knockout_prefix: --
+  gnome::packages:
+    merge:
+      strategy: deep
+      knockout_prefix: --
+
+gnome::configure: true
+gnome::packages:
+  gnome-session: ~
+  gnome-session-xsession: ~
+  gnome-settings-daemon: ~
+  gnome-terminal: ~
+  gnome-user-docs: ~
+  im-chooser: ~
+  libgnome: ~
+  libgnomeui: ~
+  nautilus: ~
+  orca: ~
+  yelp: ~
+
+gnome::dconf_profile_hierarchy:
+  - user-db:user
+  - system-db:simp
+  - system-db:local
+  - system-db:site
+  - system-db:distro
+
+gnome::dconf_hash:
+  simp:
+    org/gnome/desktop/media-handling:
+      # Prevent mount points from being automatically created
+      automount:
+        value: false
+      # Prevent automounted devices from opening automatically
+      automount-open:
+        value: false
+      # Prevent automounted devices from executing automatically
+      automount-never:
+        value: false
+    org/gnome/settings-daemon/plugins/media-keys:
+      # Ensures ctr-alt-del is not used for logout
+      logout:
+        value: '' # Setting this to an empty string causes the key sequence to be ignored
+    org/gnome/settings-daemon/plugins/power:
+      # Ensure gnome does not react to the physical machines power buttons
+      active:
+        value: false
+    org/gnome/desktop/session:
+      # Set the idle time to 15 minutes
+      idle-delay:
+        value: uint32 900
+    org/gnome/desktop/screensaver:
+      # Activate the idle timer
+      idle-activation-enabled:
+        value: true
+      # Lock the screen when the screensaver activates
+      lock-enabled:
+        value: true
+      # Ensure there is no delay in the screen lock:
+      lock-delay:
+        value: 0
+  gdm:
+    org/gnome/login-screen:
+      # Removes Shutdown From Login Screen
+      disable-restart-buttons:
+        value: true
+      banner-message-enable:
+        value: true
+
+
+gnome::gconf_hash:
+  screensaver_enabled:
+    value: true
+    type: bool
+    schema: mandatory
+  screensaver_timeout:
+    value: 15
+    type: int
+  screensaver_lock:
+    value: true
+    type: bool
+    schema: mandatory
+
+gnome::set_banner: true
+gnome::banner: |
+  --------------------------------- ATTENTION ----------------------------------
+
+                           THIS IS A RESTRICTED COMPUTER SYSTEM
+
+  This computer system, and all related equipment, networks, and
+  network devices are provided for authorised use only.  All
+  systems controlled by this organisation will be monitored for
+  all lawful purposes.  Monitoring includes the totality of the
+  operating system and connected networks.  No events on this
+  system are excluded from record and there are no exclusions
+  from this policy.
+
+  Use of this system constitutes consent to full monitoring of
+  your activities for use by the authorised monitoring organisation.
+  Unauthorised use of this system, including uninvited connections,
+  may subject you to criminal prosecution.
+
+  The data collected from this system may be used for any purpose by
+  the collecting organisation.  If you do not agree to this
+  monitoring, discontinue use of the system IMMEDIATELY.
+
+                           THIS IS A RESTRICTED COMPUTER SYSTEM
+
+  --------------------------------- ATTENTION ----------------------------------

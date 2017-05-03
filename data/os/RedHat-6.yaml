@@ -1,0 +1,8 @@
+---
+gnome::packages:
+  alacarte: ~
+  at-spi: ~
+  GConf2: ~
+  gnome-panel: ~
+  gnome-screensaver: ~
+  nautilus-open-terminal: ~
