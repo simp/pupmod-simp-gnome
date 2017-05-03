@@ -18,8 +18,8 @@ class gnome::dconf (
 ) {
   $_banner = $banner ? {
     String  => $banner,
-    default => @(EOF)
-      --------------------------------- ATTENTION ----------------------------------
+    default => @(EOF).split("\n").join('\n')
+      '--------------------------------- ATTENTION ----------------------------------
 
                                THIS IS A RESTRICTED COMPUTER SYSTEM
 
@@ -42,7 +42,7 @@ class gnome::dconf (
 
                                THIS IS A RESTRICTED COMPUTER SYSTEM
 
-      --------------------------------- ATTENTION ----------------------------------
+      --------------------------------- ATTENTION ----------------------------------'
       |EOF
   }
 
