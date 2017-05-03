@@ -1,6 +1,7 @@
 * Mon Apr 17 2017 Nick Miller <nick.miller@onyxpoint.com> - 6.0.3-0
 - Updated polkit setting to use the new defined type from the polkit module
 - Added polkit dependency
+- `dconf update` execs now catch failures
 
 * Mon Mar 15 2017 Jeanne Greulich <jeanne.greulich@onyxpoint.com> - 6.0.2-0
 - Fixed packages lists
