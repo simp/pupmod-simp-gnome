@@ -1,15 +1,16 @@
 {
   "name": "simp-gnome",
-  "version": "6.0.3",
+  "version": "6.1.0",
   "author": "SIMP Team",
-  "summary": "provides useful settings to set up GNOME.",
+  "summary": "Provides useful settings to set up the GNOME desktop environment",
   "license": "Apache-2.0",
   "source": "https://github.com/simp/pupmod-simp-gnome",
   "project_page": "https://github.com/simp/pupmod-simp-gnome",
   "issues_url": "https://github.com/simp/pupmod-simp-gnome/issues",
   "tags": [
     "simp",
-    "gnome"
+    "gnome",
+    "desktop"
   ],
   "dependencies": [
     {

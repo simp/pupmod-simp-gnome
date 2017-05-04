@@ -1,3 +1,7 @@
+* Thu May 04 2017 Nick Miller <nick.miller@onyxpoint.com> - 6.1.0-0
+- Moved the simp dconf profile below the user profile so users can change
+  their own settings in the desktop
+
 * Thu Apr 27 2017 Jeanne Greulich <jeanne.greulich@onyxpoint.com> - 6.0.3-0
 - Add dconf rule to not display user lists
 

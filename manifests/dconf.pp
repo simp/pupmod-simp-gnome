@@ -63,7 +63,7 @@ class gnome::dconf (
     owner   => 'root',
     group   => 'root',
     mode    => '0644',
-    content => "system-db:simp\nuser-db:user\nsystem-db:local\nsystem-db:site\nsystem-db:distro",
+    content => "user-db:user\nsystem-db:simp\nsystem-db:local\nsystem-db:site\nsystem-db:distro",
   }
 
   # Everything below this sets the actual values we care about

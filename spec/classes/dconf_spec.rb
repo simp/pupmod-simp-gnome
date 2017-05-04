@@ -11,7 +11,7 @@ describe 'gnome::dconf' do
       context 'with default parameters' do
         it { is_expected.to compile.with_all_deps }
         it { is_expected.to create_class('gnome::dconf') }
-        it { is_expected.to create_file('/etc/dconf/profile/user').with_content("system-db:simp\nuser-db:user\nsystem-db:local\nsystem-db:site\nsystem-db:distro") }
+        it { is_expected.to create_file('/etc/dconf/profile/user').with_content("user-db:user\nsystem-db:simp\nsystem-db:local\nsystem-db:site\nsystem-db:distro") }
         it { is_expected.to create_polkit__authorization__basic_policy('Allow anyone to shutdown system') }
         it { is_expected.to create_polkit__authorization__basic_policy('Allow anyone to restart system') }
 
