@@ -1,4 +1,4 @@
-* Thu May 04 2017 Nick Miller <nick.miller@onyxpoint.com> - 6.1.0-0
+* Thu May 04 2017 Nick Miller <nick.miller@onyxpoint.com> - 6.0.3-0
 - Moved the simp dconf profile below the user profile so users can change
   their own settings in the desktop
 
