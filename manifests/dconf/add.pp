@@ -28,7 +28,7 @@ define gnome::dconf::add (
   Stdlib::Absolutepath $base_dir = '/etc/dconf/db',
   Boolean $lock = true
 ){
-  deprecation('gnome::dconf::add is a shim for gnome::config::dconf and will be removed in a future version')
+  deprecation('gnome::dconf::add','gnome::dconf::add is a shim for gnome::config::dconf and will be removed in a future version')
 
   $_settings_hash = {
     $key => {
@@ -42,8 +42,7 @@ define gnome::dconf::add (
     profile       => $profile,
     settings_hash => $_settings_hash,
     path          => $path,
-    base_dir      => $base_dir,
-    lock          => $lock
+    base_dir      => $base_dir
   }
 
 }
