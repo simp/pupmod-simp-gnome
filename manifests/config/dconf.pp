@@ -46,8 +46,13 @@ define gnome::config::dconf (
   }
 
   $_settings_to_lock = $_locks.map |$item,$setting| {
-    if $setting['lock'] == false { next() }
-    "/${path}/${item}"
+    if $setting['lock'] == false {
+      $_ret = undef
+    }
+    else {
+      $_ret = "/${path}/${item}"
+    }
+    $_ret
   }
 
   $_lock_content = $_settings_to_lock.delete_undef_values.join("\n")
