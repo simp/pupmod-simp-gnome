@@ -5,10 +5,12 @@
 # @param configure If false, no Gnome settings will be touched.
 # @param gconf_hash Settings specific to gconf and Gnome 2.
 #   @see data/common.yaml:76
-# @param dconf_hash Settings specific to dcofn and Gnome 3.
+# @param dconf_hash Settings specific to dconf and Gnome 3.
 #   @see data/common.yaml:33
+#   @see https://wiki.gnome.org/Projects/dconf/SystemAdministrators
 # @param dconf_profile_hierarchy Dconf db priority
 #   @see https://help.gnome.org/admin/system-admin-guide/stable/dconf.html.en
+#   @see https://wiki.gnome.org/Projects/dconf/SystemAdministrators
 # @param packages A hash of packages to be installed on the system. The ensure
 #   value can be set in the hash of each package, like the example below:
 #
