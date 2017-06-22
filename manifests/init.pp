@@ -23,8 +23,6 @@
 #
 class gnome (
   Boolean $configure,
-  Boolean $set_banner,
-  String $banner,
   Gnome::Gconf $gconf_hash,
   Gnome::Dconf $dconf_hash,
   Gnome::Dconfdb $dconf_profile_hierarchy,

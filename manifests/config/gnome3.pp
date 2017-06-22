@@ -35,14 +35,6 @@ class gnome::config::gnome3 {
     }
   }
 
-  if $gnome::configure and $gnome::set_banner {
-    gnome::config::dconf {'Set banner text':
-      profile       => 'gdm',
-      path          => 'org/gnome/login-screen',
-      settings_hash => { 'banner-message-text' => { 'value' => "'${gnome::banner.regsubst(/\n/,'\n')}'" } };
-    }
-  }
-
   polkit::authorization::basic_policy {
     default:
       ensure   => 'present',
