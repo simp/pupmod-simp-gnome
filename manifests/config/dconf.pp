@@ -32,12 +32,8 @@ define gnome::config::dconf (
     $memo + { $value[0] => $value[1]['value'] }
   }
 
-  $_ini_defaults = {
-    'path' => "${base_dir}/${profile}.d/${_name}"
-  }
-  $_ini_hash = {
-    $path => $_settings_hash
-  }
+  $_ini_defaults = { 'path' => "${base_dir}/${profile}.d/${_name}" }
+  $_ini_hash     = { $path  => $_settings_hash }
   create_ini_settings($_ini_hash, $_ini_defaults)
 
   ### Locks

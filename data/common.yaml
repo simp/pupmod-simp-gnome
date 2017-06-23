@@ -45,7 +45,8 @@ gnome::dconf_hash:
     org/gnome/settings-daemon/plugins/media-keys:
       # Ensures ctr-alt-del is not used for logout
       logout:
-        value: '''' # Setting this to an empty string causes the key sequence to be ignored
+        value: > # Setting this to just quotes causes the key sequence to be ignored
+          ''
     org/gnome/settings-daemon/plugins/power:
       # Ensure gnome does not react to the physical machines power buttons
       active:
@@ -69,22 +70,28 @@ gnome::dconf_hash:
       # Removes Shutdown From Login Screen
       disable-restart-buttons:
         value: true
+      # Enables banner
       banner-message-enable:
         value: true
+      # The banner text
+      # This item should be set to a string with literal \n in place of newlines, wrapped in single quotes
       banner-message-text:
-        value:  >
-          '--------------------------------- ATTENTION ----------------------------------\n\n                         THIS IS A RESTRICTED COMPUTER SYSTEM\n\nThis computer system, and all related equipment, networks, and\nnetwork devices are provided for authorised use only.  All\nsystems controlled by this organisation will be monitored for\nall lawful purposes.  Monitoring includes the totality of the\noperating system and connected networks.  No events on this\nsystem are excluded from record and there are no exclusions\nfrom this policy.\n\nUse of this system constitutes consent to full monitoring of\nyour activities for use by the authorised monitoring organisation.\nUnauthorised use of this system, including uninvited connections,\nmay subject you to criminal prosecution.\n\nThe data collected from this system may be used for any purpose by\nthe collecting organisation.  If you do not agree to this\nmonitoring, discontinue use of the system IMMEDIATELY.\n\n                         THIS IS A RESTRICTED COMPUTER SYSTEM\n\n--------------------------------- ATTENTION ----------------------------------\n'
+        value: > 
+          '--------------------------------- ATTENTION ----------------------------------\n\n                         THIS IS A RESTRICTED COMPUTER SYSTEM\n\nThis computer system, and all related equipment, networks, and\nnetwork devices are provided for authorised use only.  All\nsystems controlled by this organisation will be monitored for\nall lawful purposes.  Monitoring includes the totality of the\noperating system and connected networks.  No events on this\nsystem are excluded from record and there are no exclusions\nfrom this policy.\n\nUse of this system constitutes consent to full monitoring of\nyour activities for use by the authorised monitoring organisation.\nUnauthorised use of this system, including uninvited connections,\nmay subject you to criminal prosecution.\n\nThe data collected from this system may be used for any purpose by\nthe collecting organisation.  If you do not agree to this\nmonitoring, discontinue use of the system IMMEDIATELY.\n\n                         THIS IS A RESTRICTED COMPUTER SYSTEM\n\n--------------------------------- ATTENTION ----------------------------------'
 
 
 gnome::gconf_hash:
   screensaver_enabled:
+    # Enable the screensaver
     value: true
     type: bool
     schema: mandatory
   screensaver_timeout:
+    # 15 minute screen lock
     value: 15
     type: int
   screensaver_lock:
+    # Require password to open screensaver
     value: true
     type: bool
     schema: mandatory
