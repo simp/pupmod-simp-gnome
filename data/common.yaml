@@ -70,6 +70,9 @@ gnome::dconf_hash:
       # Removes Shutdown From Login Screen
       disable-restart-buttons:
         value: true
+      # Do not show the list of available users at login screen
+      disable-user-list:
+        value: true
       # Enables banner
       banner-message-enable:
         value: true
