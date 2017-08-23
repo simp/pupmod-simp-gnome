@@ -1,3 +1,4 @@
+# NOTE: SIMP Puppet rake tasks support ruby 2.1.9
 # ------------------------------------------------------------------------------
 # NOTE: SIMP Puppet rake tasks support ruby 2.1.9
 # ------------------------------------------------------------------------------
@@ -10,10 +11,10 @@ group :test do
   gem 'puppet', ENV.fetch('PUPPET_VERSION',  '~> 4.0')
   gem 'rspec'
   gem 'rspec-puppet'
+  gem 'puppet-strings'
   gem 'hiera-puppet-helper'
   gem 'puppetlabs_spec_helper'
   gem 'metadata-json-lint'
-  gem 'puppet-strings'
   gem 'puppet-lint-empty_string-check',   :require => false
   gem 'puppet-lint-trailing_comma-check', :require => false
   gem 'simp-rspec-puppet-facts', ENV.fetch('SIMP_RSPEC_PUPPET_FACTS_VERSION', '~> 2.0')

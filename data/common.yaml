@@ -1,0 +1,99 @@
+---
+lookup_options:
+  '^gnome::(d|g)conf_hash$':
+    merge:
+      strategy: deep
+      knockout_prefix: --
+  gnome::packages:
+    merge:
+      strategy: deep
+      knockout_prefix: --
+
+gnome::configure: true
+gnome::packages:
+  gnome-session: ~
+  gnome-session-xsession: ~
+  gnome-settings-daemon: ~
+  gnome-terminal: ~
+  gnome-user-docs: ~
+  im-chooser: ~
+  libgnome: ~
+  libgnomeui: ~
+  nautilus: ~
+  orca: ~
+  yelp: ~
+
+gnome::dconf_profile_hierarchy:
+  - user-db:user
+  - system-db:simp
+  - system-db:local
+  - system-db:site
+  - system-db:distro
+
+gnome::dconf_hash:
+  simp:
+    org/gnome/desktop/media-handling:
+      # Prevent mount points from being automatically created
+      automount:
+        value: false
+      # Prevent automounted devices from opening automatically
+      automount-open:
+        value: false
+      # Prevent automounted devices from executing automatically
+      automount-never:
+        value: false
+    org/gnome/settings-daemon/plugins/media-keys:
+      # Ensures ctr-alt-del is not used for logout
+      # Setting this to just quotes causes the key sequence to be ignored
+      logout:
+        value: "''"
+    org/gnome/settings-daemon/plugins/power:
+      # Ensure gnome does not react to the physical machines power buttons
+      active:
+        value: false
+    org/gnome/desktop/session:
+      # Set the idle time to 15 minutes
+      idle-delay:
+        value: uint32 900
+    org/gnome/desktop/screensaver:
+      # Activate the idle timer
+      idle-activation-enabled:
+        value: true
+      # Lock the screen when the screensaver activates
+      lock-enabled:
+        value: true
+      # Ensure there is no delay in the screen lock:
+      lock-delay:
+        value: 0
+  gdm:
+    org/gnome/login-screen:
+      # Removes Shutdown From Login Screen
+      disable-restart-buttons:
+        value: true
+      # Do not show the list of available users at login screen
+      disable-user-list:
+        value: true
+      # Enables banner
+      banner-message-enable:
+        value: true
+      # The banner text
+      # This item should be set to a string with an escaped \n in place of newlines, wrapped in single quotes
+      banner-message-text:
+        value: '''--------------------------------- ATTENTION ----------------------------------\n\n                         THIS IS A RESTRICTED COMPUTER SYSTEM\n\nThis computer system, and all related equipment, networks, and\nnetwork devices are provided for authorised use only.  All\nsystems controlled by this organisation will be monitored for\nall lawful purposes.  Monitoring includes the totality of the\noperating system and connected networks.  No events on this\nsystem are excluded from record and there are no exclusions\nfrom this policy.\n\nUse of this system constitutes consent to full monitoring of\nyour activities for use by the authorised monitoring organisation.\nUnauthorised use of this system, including uninvited connections,\nmay subject you to criminal prosecution.\n\nThe data collected from this system may be used for any purpose by\nthe collecting organisation.  If you do not agree to this\nmonitoring, discontinue use of the system IMMEDIATELY.\n\n                         THIS IS A RESTRICTED COMPUTER SYSTEM\n\n--------------------------------- ATTENTION ----------------------------------'''
+
+
+gnome::gconf_hash:
+  screensaver_enabled:
+    # Enable the screensaver
+    value: true
+    type: bool
+    schema: mandatory
+  screensaver_timeout:
+    # 15 minute screen lock
+    value: 15
+    type: int
+  screensaver_lock:
+    # Require password to open screensaver
+    value: true
+    type: bool
+    schema: mandatory

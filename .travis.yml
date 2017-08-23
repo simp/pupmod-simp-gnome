@@ -15,11 +15,11 @@ before_script:
 bundler_args: --without development system_tests --path .vendor
 before_install: rm Gemfile.lock || true
 script:
-  - bundle exec rake test
+- bundle exec rake test
 notifications:
   email: false
 rvm:
-  - 2.1.9
+- 2.1.9
 env:
   global:
     - STRICT_VARIABLES=yes

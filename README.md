@@ -9,36 +9,70 @@
 
 ## Description
 
-gnome is a Puppet module that installs and manages gnome
+gnome is a Puppet module that installs and manages gnome, as well as dconf
+settings on Gnome 3 and gconf settings on Gnome 2.
 
 ### This is a SIMP module
-This module is a component of the [System Integrity Management Platform](https://github.com/NationalSecurityAgency/SIMP), a compliance-management framework built on Puppet.
 
-If you find any issues, they can be submitted to our [JIRA](https://simp-project.atlassian.net/).
+This module is a component of the [System Integrity Management Platform](https://github.com/NationalSecurityAgency/SIMP),
+a compliance-management framework built on Puppet.
 
-This module is optimally designed for use within a larger SIMP ecosystem, but it can be used independently:
+If you find any issues, they may be submitted to our [bug tracker](https://simp-project.atlassian.net/).
 
- * When included within the SIMP ecosystem, security compliance settings will be managed from the Puppet server.
- * If used independently, all SIMP-managed security subsystems are disabled by default and must be explicitly opted into by administrators.  Please review the `$client_nets`, `$enable_*` and `$use_*` parameters in `manifests/init.pp` for details.
+This module is optimally designed for use within a larger SIMP ecosystem, but
+it can be used independently:
+
+ * When included within the SIMP ecosystem, security compliance settings will
+   be managed from the Puppet server.
+ * If used independently, all SIMP-managed security subsystems are disabled by
+   default and must be explicitly opted into by administrators.  See
+   simp_options for more detail.
 
 ## Setup
 
-To use the module with default settings, just include it in your site yaml.
+To use the module with default settings, just include the class:
 
-```yaml
-classes:
-  - gnome
+```ruby
+include 'gnome'
 ```
 
 ## Usage
 
-You can enable/disable management of the screensaver and related dconf settings,
-by toggling:
-  * gnome::enable_screensaver
+You can disable configuration of gnome by setting `gnome::configure` to false. The module will then only install Gnome.
+
+This module makes heavy use of data. The dconf and gconf settings are all data-driven, and the defaults can
+be seen in the [common.yaml](data/common.yaml). You can use the knockout prefix of '--' in front of a key to remove it
+from the hash, like this:
+
+```yaml
+gnome::dconf_hash:
+  --org/gnome/settings-daemon/plugins/media-keys:
+  org/gnome/desktop/media-handling:
+    --automount-open:
+```
+
+Or you can simply set it to the desired value.
+
+Dconf settings are locked by default so that users can't change them. This can be disabled on a per setting basis, like in
+this entry for wallpaper in `gnome::dconf_hash`:
+
+```yaml
+gnome::dconf_hash:
+  org/gnome/desktop/background:
+    picture-uri:
+      value: file:///usr/local/corp/puppies.jpg
+      lock: false
+```
+
+## Reference
+
+See the [API documentation](http://www.puppetmodule.info/github/simp/pupmod-simp-gnome/master) or run `puppet strings` for full details.
 
 ## Limitations
 
-SIMP Puppet modules are generally intended for use on Red Hat Enterprise Linux and compatible distributions, such as CentOS. Please see the [`metadata.json` file](./metadata.json) for the most up-to-date list of supported operating systems, Puppet versions, and module dependencies.
+SIMP Puppet modules are generally intended for use on Red Hat Enterprise Linux and compatible distributions, such as CentOS.
+Please see the [`metadata.json` file](./metadata.json) for the most up-to-date list of supported operating systems,
+Puppet versions, and module dependencies.
 
 This module is compatible with GDM v2, v3.
 
