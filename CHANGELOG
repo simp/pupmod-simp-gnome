@@ -1,4 +1,4 @@
-* Mon June 05 2017 Nick Miller <nick.miller@onyxpointi.com> - 7.0.0
+* Mon Jun 05 2017 Nick Miller <nick.miller@onyxpoint.com> - 7.0.0-0
 - module was rewritten
   - takes advantage of the data in modules paradigm
   - has a single point of entry
