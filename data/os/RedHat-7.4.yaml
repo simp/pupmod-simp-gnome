@@ -1,0 +1,3 @@
+---
+gnome::packages:
+  libxkbcommon-x11: ~

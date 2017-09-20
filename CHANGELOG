@@ -1,3 +1,8 @@
+* Wed Sep 20 2017 Liz Nemsick <lnemsick.simp@gmail.com> - 7.0.1-0
+- Add libxkbcommon-x11 to required package list for CentOS/RedHat 7.4.
+- Remove unnecessary CentOS data-in-module files.  The OS family fact
+  for CentOS is RedHat, so these files are not used.
+
 * Mon Jun 05 2017 Nick Miller <nick.miller@onyxpoint.com> - 7.0.0-0
 - module was rewritten
   - takes advantage of the data in modules paradigm
