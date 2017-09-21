@@ -35,6 +35,8 @@ packages_el7 = [
   'yelp',
 ]
 
+packages_el7_4 = packages_el7 + [ 'libxkbcommon-x11' ]
+
 describe 'gnome' do
   on_supported_os.each do |os, os_facts|
     context "on #{os}" do
@@ -202,6 +204,46 @@ describe 'gnome' do
         it { is_expected.to create_package('gnome-terminal').with_ensure('installed') }
       end
 
+    end
+  end
+
+  # These tests can be folded into the tests above, once
+  # simp-rspec-puppet-facts RubyGem is updated.
+  context 'with CentOS 7.4' do
+    let(:facts) {{
+      :os => {
+        :family    => "RedHat",
+        :hardware  => "x86_64",
+        :name      => "CentOS",
+        :release   => {
+          :major => "7",
+          :minor => "4"
+        }
+      },
+      :gdm_version => '3.20.1'
+    }}
+
+    packages_el7_4.each do |pkg|
+      it { is_expected.to contain_package(pkg).with_ensure('installed') }
+    end
+  end
+
+  context 'with RedHat 7.4' do
+    let(:facts) {{
+      :os => {
+        :family    => "RedHat",
+        :hardware  => "x86_64",
+        :name      => "RedHat",
+        :release   => {
+          :major => "7",
+          :minor => "4"
+        }
+      },
+      :gdm_version => '3.20.1'
+    }}
+
+    packages_el7_4.each do |pkg|
+      it { is_expected.to contain_package(pkg).with_ensure('installed') }
     end
   end
 end
