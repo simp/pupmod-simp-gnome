@@ -1,3 +1,6 @@
+* Tue Mar 20 2018 Trevor Vaughan <tvaughan@onyxpoint.com> - 7.0.2-0
+- Add support for OEL and Puppet 5
+
 * Fri May 18 2018 Trevor Vaughan <tvaughan@onyxpoint.com> - 8.0.0
 - Removed all GDM and Dconf settings - BREAKING
   - Dconf has been moved to its own module
