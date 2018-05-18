@@ -12,6 +12,9 @@ unless ENV['BEAKER_provision'] == 'no'
     else
       install_puppet
     end
+    # Install git, it's a dependency for inspec profiles
+    # Found this when experiencing https://github.com/chef/inspec/issues/1270
+    install_package(host, 'git')
   end
 end
 
@@ -28,7 +31,11 @@ RSpec.configure do |c|
     begin
       # Install modules and dependencies from spec/fixtures/modules
       copy_fixture_modules_to( hosts )
-      server = only_host_with_role(hosts, 'server')
+      begin
+        server = only_host_with_role(hosts, 'server')
+      rescue ArgumentError =>e
+        server = only_host_with_role(hosts, 'default')
+      end
 
       # Generate and install PKI certificates on each SUT
       Dir.mktmpdir do |cert_dir|

@@ -1,3 +1,18 @@
+* Fri May 18 2018 Trevor Vaughan <tvaughan@onyxpoint.com> - 8.0.0-0
+- Removed the deprecated 'gnome::dconf::add' defined type - BREAKING
+- Removed 'gdm' default 'dconf' settings since they will break systems that do
+  not have 'gdm' installed - BREAKING
+- Update the gdm::dconf_profile_hierarchy to work with other services, such as
+  GDM, that need to add items to the hierarchy - BREAKING
+- Moved 'gnome::config::dconf' to the top level - BREAKING
+- Removed all GDM settings from the hierarchy since they could cause errors
+  upon application if GDM is not installed - BREAKING
+- Added 'gnome::config::dconf::profile' to allow services to add items to the
+  profile hierarchy
+- Solidified the Data Types
+- Added MATE support
+- Purge any extra files dropped into dconf db directories
+
 * Wed Sep 20 2017 Liz Nemsick <lnemsick.simp@gmail.com> - 7.0.1-0
 - Add libxkbcommon-x11 to required package list for CentOS/RedHat 7.4.
 - Remove unnecessary CentOS data-in-module files.  The OS family fact

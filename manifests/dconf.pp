@@ -16,7 +16,7 @@
 # @param ensure Ensure the setting is present or absent
 # @param base_dir The database base directory. This probably shouldn't be changed.
 #
-define gnome::config::dconf (
+define gnome::dconf (
   Hash $settings_hash,
   String $profile,
   String $path,
@@ -32,8 +32,17 @@ define gnome::config::dconf (
     $memo + { $value[0] => $value[1]['value'] }
   }
 
-  $_ini_defaults = { 'path' => "${base_dir}/${profile}.d/${_name}" }
+  $_ini_path = "${base_dir}/${profile}.d/${_name}"
+  $_ini_defaults = { 'path' => $_ini_path }
   $_ini_hash     = { $path  => $_settings_hash }
+
+  ensure_resource('file', $_ini_path, {
+    'ensure' => 'file',
+    'owner'  => 'root',
+    'group'  => 'root',
+    'mode'   => '0644'
+  })
+
   create_ini_settings($_ini_hash, $_ini_defaults)
 
   ### Locks
@@ -76,5 +85,4 @@ define gnome::config::dconf (
     umask       => '0033',
     refreshonly => true
   }
-
 }

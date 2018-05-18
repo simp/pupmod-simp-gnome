@@ -1,7 +1,18 @@
 ---
 fixtures:
   repositories:
-    inifile: https://github.com/simp/puppetlabs-inifile
-    polkit: https://github.com/simp/pupmod-simp-polkit
-    simplib: https://github.com/simp/pupmod-simp-simplib
-    stdlib: https://github.com/simp/puppetlabs-stdlib
+    auditd:               "https://github.com/simp/pupmod-simp-auditd"
+    augeasproviders_core: "https://github.com/simp/augeasproviders_core"
+    augeasproviders_grub: "https://github.com/simp/augeasproviders_grub"
+    concat:               "https://github.com/simp/puppetlabs-concat"
+    gdm:                  "https://github.com/simp/pupmod-simp-gdm"
+    inifile:              "https://github.com/simp/puppetlabs-inifile"
+    logrotate:            "https://github.com/simp/pupmod-simp-logrotate"
+    pki:                  "https://github.com/simp/pupmod-simp-pki"
+    polkit:               "https://github.com/simp/pupmod-simp-polkit"
+    rsyslog:              "https://github.com/simp/pupmod-simp-rsyslog"
+    simpcat:              "https://github.com/simp/pupmod-simp-simpcat"
+    simplib:              "https://github.com/simp/pupmod-simp-simplib"
+    stdlib:               "https://github.com/simp/puppetlabs-stdlib"
+  symlinks:
+    gnome: "#{source_dir}"

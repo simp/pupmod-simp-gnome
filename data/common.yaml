@@ -8,8 +8,15 @@ lookup_options:
     merge:
       strategy: deep
       knockout_prefix: --
+  gnome::mate_packages:
+    merge:
+      strategy: deep
+      knockout_prefix: --
 
 gnome::configure: true
+
+gnome::enable_gnome: true
+
 gnome::packages:
   gnome-session: ~
   gnome-session-xsession: ~
@@ -23,15 +30,44 @@ gnome::packages:
   orca: ~
   yelp: ~
 
+gnome::enable_mate: false
+
+gnome::mate_packages:
+  caja-open-terminal: ~
+  caja: ~
+  gnome-terminal: ~
+  marco: ~
+  mate-desktop: ~
+  mate-polkit: ~
+  mate-power-manager: ~
+  mate-screensaver: ~
+  mate-session-manager: ~
+  mate-settings-daemon: ~
+  mate-themes: ~
+
 gnome::dconf_profile_hierarchy:
-  - user-db:user
-  - system-db:simp
-  - system-db:local
-  - system-db:site
-  - system-db:distro
+  user:
+    type: user
+    order: 1
+  simp:
+    type: system
+    order: 10
+  simp_mate:
+    type: system
+    order: 10
+  local:
+    type: system
+    order: 20
+  site:
+    type: system
+    order: 30
+  distro:
+    type: system
+    order: 40
 
 gnome::dconf_hash:
   simp:
+    # GNOME Settings
     org/gnome/desktop/media-handling:
       # Prevent mount points from being automatically created
       automount:
@@ -40,15 +76,15 @@ gnome::dconf_hash:
       automount-open:
         value: false
       # Prevent automounted devices from executing automatically
-      automount-never:
-        value: false
+      autorun-never:
+        value: true
     org/gnome/settings-daemon/plugins/media-keys:
       # Ensures ctr-alt-del is not used for logout
       # Setting this to just quotes causes the key sequence to be ignored
       logout:
         value: "''"
     org/gnome/settings-daemon/plugins/power:
-      # Ensure gnome does not react to the physical machines power buttons
+      # Ensure GNOME does not react to the physical machines power buttons
       active:
         value: false
     org/gnome/desktop/session:
@@ -65,22 +101,41 @@ gnome::dconf_hash:
       # Ensure there is no delay in the screen lock:
       lock-delay:
         value: 0
-  gdm:
-    org/gnome/login-screen:
-      # Removes Shutdown From Login Screen
-      disable-restart-buttons:
+  simp_mate:
+    # MATE Settings
+    org/mate/media-handling:
+      # Prevent mount points from being automatically created
+      automount:
+        value: false
+      # Prevent automounted devices from opening automatically
+      automount-open:
+        value: false
+      # Prevent automounted devices from executing automatically
+      autorun-never:
         value: true
-      # Do not show the list of available users at login screen
-      disable-user-list:
+    org/mate/SettingsDaemon/plugins/media-keys:
+      # Ensures ctr-alt-del is not used for logout
+      # Setting this to just quotes causes the key sequence to be ignored
+      logout:
+        value: "''"
+    org/mate/power-manager:
+      # Ensure MATE does not react to the physical machines power buttons
+      button-power:
+        value: "'nothing'"
+    org/mate/session:
+      # Set the idle time to 15 minutes
+      idle-delay:
+        value: uint32 900
+    org/mate/screensaver:
+      # Activate the idle timer
+      idle-activation-enabled:
         value: true
-      # Enables banner
-      banner-message-enable:
+      # Lock the screen when the screensaver activates
+      lock-enabled:
         value: true
-      # The banner text
-      # This item should be set to a string with an escaped \n in place of newlines, wrapped in single quotes
-      banner-message-text:
-        value: '''--------------------------------- ATTENTION ----------------------------------\n\n                         THIS IS A RESTRICTED COMPUTER SYSTEM\n\nThis computer system, and all related equipment, networks, and\nnetwork devices are provided for authorised use only.  All\nsystems controlled by this organisation will be monitored for\nall lawful purposes.  Monitoring includes the totality of the\noperating system and connected networks.  No events on this\nsystem are excluded from record and there are no exclusions\nfrom this policy.\n\nUse of this system constitutes consent to full monitoring of\nyour activities for use by the authorised monitoring organisation.\nUnauthorised use of this system, including uninvited connections,\nmay subject you to criminal prosecution.\n\nThe data collected from this system may be used for any purpose by\nthe collecting organisation.  If you do not agree to this\nmonitoring, discontinue use of the system IMMEDIATELY.\n\n                         THIS IS A RESTRICTED COMPUTER SYSTEM\n\n--------------------------------- ATTENTION ----------------------------------'''
-
+      # Ensure there is no delay in the screen lock:
+      lock-delay:
+        value: 0
 
 gnome::gconf_hash:
   screensaver_enabled:
