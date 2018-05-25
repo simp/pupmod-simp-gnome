@@ -6,7 +6,7 @@ TODO: Re-enable the changelog check in .travis.yml once this is out of alpha
 - Moved 'gnome::config::dconf' to the top level for clarity - BREAKING
 - Removed all GDM settings from the hierarchy since they could cause errors
   upon application if GDM is not installed - BREAKING
-  - These settings should now be updated via the GDM module
+  - These settings should now be updated via the simp/gdm module
 - Fixed a typo in the `dconf_hash` where `automount-never` was specified
   instead of `autorun-never`
 - Added 'gnome::config::dconf::profile' to allow services to add items to the
