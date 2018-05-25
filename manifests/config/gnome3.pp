@@ -9,28 +9,54 @@ class gnome::config::gnome3 {
   $_dir       = $_profile_list.map |$profile| { "/etc/dconf/db/${profile}.d" }
   $_locks_dir = $_profile_list.map |$profile| { "/etc/dconf/db/${profile}.d/locks" }
 
-  file { $_dir + $_locks_dir :
-    ensure => 'directory',
-    owner  => 'root',
-    group  => 'root',
-    mode   => '0644'
-  }
-
-  file { '/etc/dconf/profile/user':
+  ensure_resource('file', $_dir + $_locks_dir, {
+    ensure  => 'directory',
     owner   => 'root',
     group   => 'root',
     mode    => '0644',
-    content => $gnome::dconf_profile_hierarchy.join("\n")
+    recurse => true,
+    purge   => true
+  })
+
+  gnome::dconf::profile { 'user':
+    entries => $gnome::dconf_profile_hierarchy
   }
 
-  # each profile
   $gnome::dconf_hash.each |String $profile_name, Hash $profiles| {
-    # each path
-    $profiles.each |String $path, Hash $settings| {
-      gnome::config::dconf { "${profile_name} ${path}":
-        path          => $path,
-        profile       => $profile_name,
-        settings_hash => $settings
+    # Enable GNOME settings if using GNOME
+    if $profile_name == 'simp' {
+      if $gnome::enable_gnome {
+        $profiles.each |String $path, Hash $settings| {
+          gnome::dconf { "${profile_name} ${path}":
+            path          => $path,
+            profile       => $profile_name,
+            settings_hash => $settings
+          }
+        }
+      }
+    }
+
+    # Enable MATE settings if using MATE
+    elsif $profile_name == 'simp_mate' {
+      if $gnome::enable_mate {
+        $profiles.each |String $path, Hash $settings| {
+          gnome::dconf { "${profile_name} ${path}":
+            path          => $path,
+            profile       => $profile_name,
+            settings_hash => $settings
+          }
+        }
+      }
+    }
+
+    # Apply the remainder of the settings
+    else {
+      $profiles.each |String $path, Hash $settings| {
+        gnome::dconf { "${profile_name} ${path}":
+          path          => $path,
+          profile       => $profile_name,
+          settings_hash => $settings
+        }
       }
     }
   }

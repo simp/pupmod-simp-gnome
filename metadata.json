@@ -1,6 +1,6 @@
 {
   "name": "simp-gnome",
-  "version": "7.0.1",
+  "version": "8.0.0-alpha",
   "author": "SIMP Team",
   "summary": "Provides useful settings to set up the GNOME desktop environment",
   "license": "Apache-2.0",
@@ -13,10 +13,6 @@
     "desktop"
   ],
   "dependencies": [
-    {
-      "name": "simp/mozilla",
-      "version_requirement": ">= 5.0.0 < 6.0.0"
-    },
     {
       "name": "simp/polkit",
       "version_requirement": ">= 6.1.0 < 7.0.0"
@@ -49,7 +45,7 @@
   "requirements": [
     {
       "name": "puppet",
-      "version_requirement": ">= 4.7.0 < 5.0.0"
+      "version_requirement": ">= 4.7.0 < 6.0.0"
     }
   ],
   "data_provider": "hiera"

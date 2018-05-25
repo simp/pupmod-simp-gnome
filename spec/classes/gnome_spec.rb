@@ -35,19 +35,25 @@ packages_el7 = [
   'yelp',
 ]
 
+packages_mate = [
+  'caja-open-terminal',
+  'caja',
+  'gnome-terminal',
+  'marco',
+  'mate-desktop',
+  'mate-polkit',
+  'mate-power-manager',
+  'mate-session-manager',
+  'mate-settings-daemon',
+  'mate-themes'
+]
+
 packages_el7_4 = packages_el7 + [ 'libxkbcommon-x11' ]
 
 describe 'gnome' do
   on_supported_os.each do |os, os_facts|
     context "on #{os}" do
-      let(:facts) do
-        if os_facts[:os][:release][:major] >= '7'
-          os_facts[:gdm_version] = '3.20.1'
-        else
-          os_facts[:gdm_version] = '2.20.1'
-        end
-        os_facts
-      end
+      let(:facts) { os_facts }
 
       context 'with default parameters' do
         it { is_expected.to compile.with_all_deps }
@@ -60,7 +66,7 @@ describe 'gnome' do
           packages = packages_el6
         end
         packages.each do |pkg|
-          it { is_expected.to contain_package(pkg).with_ensure('installed') }
+          it { is_expected.to contain_package(pkg).with_ensure('present') }
         end
 
         # gnome::config
@@ -84,60 +90,38 @@ describe 'gnome' do
 
         # gnome::config::gnome3
         if os_facts[:os][:release][:major] >= '7'
-          it { is_expected.to create_file('/etc/dconf/profile/user').with_content(
-           'user-db:user
-            system-db:simp
-            system-db:local
-            system-db:site
-            system-db:distro'.gsub(/^\s+/,'')
-          ) }
-
           it { is_expected.to create_polkit__authorization__basic_policy('Allow anyone to shutdown system') }
           it { is_expected.to create_polkit__authorization__basic_policy('Allow anyone to restart system') }
-          it { is_expected.to create_file('/etc/dconf/db/gdm.d').with_ensure('directory') }
-          it { is_expected.to create_file('/etc/dconf/db/gdm.d/locks').with_ensure('directory') }
-          # it { require 'pry';binding.pry }
-          it { is_expected.to create_gnome__config__dconf('gdm org/gnome/login-screen').with({
-            :ensure        => 'present',
-            :profile       => 'gdm',
-            :path          => 'org/gnome/login-screen',
-            :settings_hash => {
-              'disable-restart-buttons' => { 'value' => true },
-              'disable-user-list'       => { 'value' => true },
-              'banner-message-enable'   => { 'value' => true },
-              'banner-message-text'     => { 'value' => %q{'--------------------------------- ATTENTION ----------------------------------\n\n                         THIS IS A RESTRICTED COMPUTER SYSTEM\n\nThis computer system, and all related equipment, networks, and\nnetwork devices are provided for authorised use only.  All\nsystems controlled by this organisation will be monitored for\nall lawful purposes.  Monitoring includes the totality of the\noperating system and connected networks.  No events on this\nsystem are excluded from record and there are no exclusions\nfrom this policy.\n\nUse of this system constitutes consent to full monitoring of\nyour activities for use by the authorised monitoring organisation.\nUnauthorised use of this system, including uninvited connections,\nmay subject you to criminal prosecution.\n\nThe data collected from this system may be used for any purpose by\nthe collecting organisation.  If you do not agree to this\nmonitoring, discontinue use of the system IMMEDIATELY.\n\n                         THIS IS A RESTRICTED COMPUTER SYSTEM\n\n--------------------------------- ATTENTION ----------------------------------'} }
-            }
-          }) }
 
           # data structure driven
           it { is_expected.to create_file('/etc/dconf/db/simp.d').with_ensure('directory') }
           it { is_expected.to create_file('/etc/dconf/db/simp.d/locks').with_ensure('directory') }
-          it { is_expected.to create_gnome__config__dconf('simp org/gnome/desktop/media-handling').with({
+          it { is_expected.to create_gnome__dconf('simp org/gnome/desktop/media-handling').with({
             :ensure        => 'present',
             :profile       => 'simp',
             :path          => 'org/gnome/desktop/media-handling',
             :settings_hash => {
-              'automount'       => { 'value' => false },
-              'automount-open'  => { 'value' => false },
-              'automount-never' => { 'value' => false },
+              'automount'      => { 'value' => false },
+              'automount-open' => { 'value' => false },
+              'autorun-never'  => { 'value' => true },
             }
           }) }
-          it { is_expected.to create_gnome__config__dconf('simp org/gnome/settings-daemon/plugins/media-keys').with({
+          it { is_expected.to create_gnome__dconf('simp org/gnome/settings-daemon/plugins/media-keys').with({
             :settings_hash => {
               'logout' => { 'value' => "''" },
             }
           }) }
-          it { is_expected.to create_gnome__config__dconf('simp org/gnome/settings-daemon/plugins/power').with({
+          it { is_expected.to create_gnome__dconf('simp org/gnome/settings-daemon/plugins/power').with({
             :settings_hash => {
               'active' => { 'value' => false },
             }
           }) }
-          it { is_expected.to create_gnome__config__dconf('simp org/gnome/desktop/session').with({
+          it { is_expected.to create_gnome__dconf('simp org/gnome/desktop/session').with({
             :settings_hash => {
               'idle-delay' => { 'value' => 'uint32 900' },
             }
           }) }
-          it { is_expected.to create_gnome__config__dconf('simp org/gnome/desktop/screensaver').with({
+          it { is_expected.to create_gnome__dconf('simp org/gnome/desktop/screensaver').with({
             :settings_hash => {
               'idle-activation-enabled' => { 'value' => true },
               'lock-enabled'            => { 'value' => true },
@@ -145,17 +129,18 @@ describe 'gnome' do
             }
           }) }
         end
+      end
 
+      context 'with a more populated packages' do
+        let(:params) {{ :packages => {
+          'good-package' => { 'ensure' => '1.2.3' },
+          'gnome-terminal' => :undef
+        } }}
+        it { is_expected.to create_package('good-package').with_ensure('1.2.3') }
+        it { is_expected.to create_package('gnome-terminal').with_ensure('present') }
       end
 
       if os_facts[:os][:release][:major] >= '7'
-        context 'with a different dconf_profile_hierarchy' do
-          let(:params) {{ dconf_profile_hierarchy: ['user-db:user','system-db:test'] }}
-          it { is_expected.to create_file('/etc/dconf/profile/user').with_content(
-           'user-db:user
-            system-db:test'.gsub(/^\s+/,'')
-          ) }
-        end
         context 'with an overridden dconf_hash' do
           let(:params) {{
             'dconf_hash' => {
@@ -168,7 +153,7 @@ describe 'gnome' do
           }}
           it { is_expected.to create_file('/etc/dconf/db/simp.d').with_ensure('directory') }
           it { is_expected.to create_file('/etc/dconf/db/simp.d/locks').with_ensure('directory') }
-          it { is_expected.to create_gnome__config__dconf('simp org/gnome/desktop/background').with_profile('simp') }
+          it { is_expected.to create_gnome__dconf('simp org/gnome/desktop/background').with_profile('simp') }
         end
         context 'with multiple profiles in dconf_hash' do
           let(:params) {{
@@ -185,65 +170,84 @@ describe 'gnome' do
               }
             }
           }}
+
           it { is_expected.to create_file('/etc/dconf/db/simp.d').with_ensure('directory') }
+
           it { is_expected.to create_file('/etc/dconf/db/simp.d/locks').with_ensure('directory') }
+
           it { is_expected.to create_file('/etc/dconf/db/site.d').with_ensure('directory') }
+
           it { is_expected.to create_file('/etc/dconf/db/site.d/locks').with_ensure('directory') }
-          it { is_expected.to create_gnome__config__dconf('simp org/gnome/desktop/background').with_profile('simp') }
-          it { is_expected.to create_gnome__config__dconf('site system/proxy/http').with_profile('site') }
+
+          it { is_expected.to create_gnome__dconf('simp org/gnome/desktop/background').with_profile('simp') }
+
+          it { is_expected.to create_gnome__dconf('site system/proxy/http').with_profile('site') }
         end
 
+        if os_facts[:os][:release][:full] == '7.4'
+          packages_el7_4.each do |pkg|
+            it { is_expected.to contain_package(pkg).with_ensure('present') }
+          end
+        end
       end
 
-      context 'with a more populated packages' do
-        let(:params) {{ :packages => {
-          'good-package' => { 'ensure' => '1.2.3' },
-          'gnome-terminal' => :undef
-        } }}
-        it { is_expected.to create_package('good-package').with_ensure('1.2.3') }
-        it { is_expected.to create_package('gnome-terminal').with_ensure('installed') }
+      context 'when using MATE' do
+        let(:params) {{
+          :enable_mate => true
+        }}
+
+        if os_facts[:os][:release][:major] < '7'
+          it { is_expected.to_not contain_gnome__install('mate') }
+        else
+          it { is_expected.to contain_gnome__install('mate') }
+
+          packages_mate.each do |pkg|
+            it { is_expected.to contain_package(pkg).with_ensure('present') }
+          end
+
+          it { is_expected.to create_gnome__dconf('simp_mate org/mate/media-handling').with({
+            :ensure        => 'present',
+            :profile       => 'simp_mate',
+            :path          => 'org/mate/media-handling',
+            :settings_hash => {
+              'automount'      => { 'value' => false },
+              'automount-open' => { 'value' => false },
+              'autorun-never'  => { 'value' => true },
+            }
+          }) }
+          it { is_expected.to create_gnome__dconf('simp_mate org/mate/SettingsDaemon/plugins/media-keys').with({
+            :settings_hash => {
+              'logout' => { 'value' => "''" },
+            }
+          }) }
+          it { is_expected.to create_gnome__dconf('simp_mate org/mate/power-manager').with({
+            :settings_hash => {
+              'button-power' => { 'value' => "'nothing'"},
+            }
+          }) }
+          it { is_expected.to create_gnome__dconf('simp_mate org/mate/session').with({
+            :settings_hash => {
+              'idle-delay' => { 'value' => 'uint32 900' },
+            }
+          }) }
+          it { is_expected.to create_gnome__dconf('simp_mate org/mate/screensaver').with({
+            :settings_hash => {
+              'idle-activation-enabled' => { 'value' => true },
+              'lock-enabled'            => { 'value' => true },
+              'lock-delay'              => { 'value' => 0 },
+            }
+          }) }
+        end
       end
 
-    end
-  end
+      context 'with neither GNOME nor MATE specified for installation' do
+        let(:params) {{
+          :enable_gnome => false,
+          :enable_mate  => false
+        }}
 
-  # These tests can be folded into the tests above, once
-  # simp-rspec-puppet-facts RubyGem is updated.
-  context 'with CentOS 7.4' do
-    let(:facts) {{
-      :os => {
-        :family    => "RedHat",
-        :hardware  => "x86_64",
-        :name      => "CentOS",
-        :release   => {
-          :major => "7",
-          :minor => "4"
-        }
-      },
-      :gdm_version => '3.20.1'
-    }}
-
-    packages_el7_4.each do |pkg|
-      it { is_expected.to contain_package(pkg).with_ensure('installed') }
-    end
-  end
-
-  context 'with RedHat 7.4' do
-    let(:facts) {{
-      :os => {
-        :family    => "RedHat",
-        :hardware  => "x86_64",
-        :name      => "RedHat",
-        :release   => {
-          :major => "7",
-          :minor => "4"
-        }
-      },
-      :gdm_version => '3.20.1'
-    }}
-
-    packages_el7_4.each do |pkg|
-      it { is_expected.to contain_package(pkg).with_ensure('installed') }
+        it { is_expected.to raise_error(/You must set either/) }
+      end
     end
   end
 end

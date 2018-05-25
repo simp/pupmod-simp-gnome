@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe 'gnome::config::dconf', :type => :define do
+describe 'gnome::dconf', :type => :define do
   on_supported_os.each do |os, facts|
     context "on #{os}" do
       let(:facts) do
@@ -17,6 +17,7 @@ describe 'gnome::config::dconf', :type => :define do
           :path        => 'org/gnome/desktop/screensaver'
         }}
         it { is_expected.to compile.with_all_deps }
+        it { is_expected.to create_file('/etc/dconf/db/gdm.d/enable_lock_delay') }
         it { is_expected.to create_ini_setting('/etc/dconf/db/gdm.d/enable_lock_delay [org/gnome/desktop/screensaver] lock-delay') \
           .with_value('true') }
         it { is_expected.to create_ini_setting('/etc/dconf/db/gdm.d/enable_lock_delay [org/gnome/desktop/screensaver] lock-delay').with({
