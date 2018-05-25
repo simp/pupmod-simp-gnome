@@ -1,13 +1,14 @@
 * Fri May 18 2018 Trevor Vaughan <tvaughan@onyxpoint.com> - 8.0.0-alpha
 TODO: Re-enable the changelog check in .travis.yml once this is out of alpha
 - Removed the deprecated 'gnome::dconf::add' defined type - BREAKING
-- Removed 'gdm' default 'dconf' settings since they will break systems that do
-  not have 'gdm' installed - BREAKING
-- Update the gdm::dconf_profile_hierarchy to work with other services, such as
+- Generalize the gdm::dconf_profile_hierarchy to work with other services, such as
   GDM, that need to add items to the hierarchy - BREAKING
-- Moved 'gnome::config::dconf' to the top level - BREAKING
+- Moved 'gnome::config::dconf' to the top level for clarity - BREAKING
 - Removed all GDM settings from the hierarchy since they could cause errors
   upon application if GDM is not installed - BREAKING
+  - These settings should now be updated via the GDM module
+- Fixed a typo in the `dconf_hash` where `automount-never` was specified
+  instead of `autorun-never`
 - Added 'gnome::config::dconf::profile' to allow services to add items to the
   profile hierarchy
 - Solidified the Data Types
