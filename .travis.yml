@@ -16,7 +16,7 @@ bundler_args: --without development system_tests --path .vendor
 before_install: rm Gemfile.lock || true
 script:
   # TODO: Uncomment when out of alpha
-  #- bundle exec rake compare_latest_tag
+  #- bundle exec rake pkg:compare_latest_tag
   - bundle exec rake test
 notifications:
   email: false
