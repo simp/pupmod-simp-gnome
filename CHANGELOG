@@ -1,4 +1,5 @@
-* Fri May 18 2018 Trevor Vaughan <tvaughan@onyxpoint.com> - 8.0.0-0
+* Fri May 18 2018 Trevor Vaughan <tvaughan@onyxpoint.com> - 8.0.0-alpha
+TODO: Re-enable the changelog check in .travis.yml once this is out of alpha
 - Removed the deprecated 'gnome::dconf::add' defined type - BREAKING
 - Removed 'gdm' default 'dconf' settings since they will break systems that do
   not have 'gdm' installed - BREAKING
