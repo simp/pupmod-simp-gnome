@@ -78,13 +78,13 @@ class gnome (
   # This logic will need to get more complex if we start supporting non-RHEL
   # derived operating systems
   if $enable_gnome or ( $enable_mate and ($facts['os']['release']['major'] < '7')) {
-    gnome::install { 'gnome':
-      packages       => $packages,
-      package_ensure => $package_ensure
+    simplib::install { 'gnome':
+      packages => $packages,
+      defaults => {'ensure'  => $package_ensure }
     }
 
     if $configure {
-      Gnome::Install['gnome'] -> Class['gnome::config']
+      Simplib::Install['gnome'] -> Class['gnome::config']
     }
   }
 

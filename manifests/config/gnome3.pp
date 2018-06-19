@@ -18,7 +18,7 @@ class gnome::config::gnome3 {
     purge   => true
   })
 
-  gnome::dconf::profile { 'user':
+  dconf::profile { 'user':
     entries => $gnome::dconf_profile_hierarchy
   }
 
@@ -27,8 +27,7 @@ class gnome::config::gnome3 {
     if $profile_name == 'simp' {
       if $gnome::enable_gnome {
         $profiles.each |String $path, Hash $settings| {
-          gnome::dconf { "${profile_name} ${path}":
-            path          => $path,
+          dconf::settings { "${profile_name} ${path}":
             profile       => $profile_name,
             settings_hash => $settings
           }
@@ -40,8 +39,7 @@ class gnome::config::gnome3 {
     elsif $profile_name == 'simp_mate' {
       if $gnome::enable_mate {
         $profiles.each |String $path, Hash $settings| {
-          gnome::dconf { "${profile_name} ${path}":
-            path          => $path,
+          dconf::settings { "${profile_name} ${path}":
             profile       => $profile_name,
             settings_hash => $settings
           }
@@ -52,8 +50,7 @@ class gnome::config::gnome3 {
     # Apply the remainder of the settings
     else {
       $profiles.each |String $path, Hash $settings| {
-        gnome::dconf { "${profile_name} ${path}":
-          path          => $path,
+        dconf::settings { "${profile_name} ${path}":
           profile       => $profile_name,
           settings_hash => $settings
         }
