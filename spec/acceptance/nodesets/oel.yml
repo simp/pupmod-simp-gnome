@@ -4,7 +4,6 @@ HOSTS:
       - default
       - master
       - client
-      - mate_enabled
     platform:   el-7-x86_64
     box:        elastic/oel-7-x86_64
     hypervisor: vagrant
