@@ -6,12 +6,12 @@
 #   @see data/common.yaml
 #
 # @param gconf_hash
-#   Settings specific to gconf and Gnome 2
+#   gconf settings specific to Gnome 2
 #
 #   @see data/common.yaml
 #
 # @param dconf_hash
-#   Settings specific to dconf and Gnome 3
+#   dconf settings specific to Gnome 3
 #
 #   @see data/common.yaml
 #   @see https://wiki.gnome.org/Projects/dconf/SystemAdministrators
