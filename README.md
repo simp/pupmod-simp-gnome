@@ -10,15 +10,13 @@
   * [This is a SIMP module](#this-is-a-simp-module)
 * [Setup](#setup)
 * [Usage](#usage)
-  * [Switching to MATE](#switching-to-mate)
 * [Reference](#reference)
 * [Limitations](#limitations)
 * [Development](#development)
 
 ## Description
 
-`gnome` is a Puppet module that installs and manages GNOME and/or MATE, as
-well as `dconf` settings on Gnome 3/MATE and `gconf` settings on Gnome 2.
+`gnome` is a Puppet module that installs and manages a GNOME 2 or 3 installation.
 
 ### This is a SIMP module
 
@@ -59,9 +57,10 @@ Hash, like this:
 
 ```yaml
 gnome::dconf_hash:
-  --org/gnome/settings-daemon/plugins/media-keys:
-  org/gnome/desktop/media-handling:
-    --automount-open:
+  simp_gnome:
+    --org/gnome/settings-daemon/plugins/media-keys:
+    org/gnome/desktop/media-handling:
+      --automount-open:
 ```
 
 Or you can simply set it to the desired value.
@@ -73,32 +72,12 @@ in `gnome::dconf_hash`:
 
 ```yaml
 gnome::dconf_hash:
-  org/gnome/desktop/background:
-    picture-uri:
-      value: file:///usr/local/corp/puppies.jpg
-      lock: false
+  simp_gnome:
+    org/gnome/desktop/background:
+      picture-uri:
+        value: file:///usr/local/corp/puppies.jpg
+        lock: false
 ```
-
-### Switching to MATE
-
-In some cases, such as when using `x2go` as supplied for EL7, you may not be
-able to use a compositing window manager like GNOME 3 and will need to fall
-back to an alternative.
-
-[MATE](https://mate-desktop.org) is a continuation of the GNOME 2 project but
-supports the `dconf` subsystem allowing for an easier configuration experience.
-
-While GNOME and MATE do not conflict and can be enabled together, if you wish
-to use MATE and not GNOME, you simply need to set the following:
-
-```yaml
-gnome::enable_gnome: false
-gnome::enable_mate: true
-```
-
-NOTE: Disabling GNOME will not remove any packages from your system so it will
-remain a valid window manager option if installed. It is recommended that you
-keep managing GNOME if you have already started to do so.
 
 ## Reference
 

@@ -46,27 +46,13 @@ gnome::mate_packages:
   mate-themes: ~
 
 gnome::dconf_profile_hierarchy:
-  user:
-    type: user
-    order: 1
-  simp:
+  simp_gnome:
     type: system
     order: 10
-  simp_mate:
-    type: system
-    order: 10
-  local:
-    type: system
-    order: 20
-  site:
-    type: system
-    order: 30
-  distro:
-    type: system
-    order: 40
 
 gnome::dconf_hash:
-  simp:
+  # This needs to match whatever is specified under dconf_profile_hierarchy
+  simp_gnome:
     # GNOME Settings
     org/gnome/desktop/media-handling:
       # Prevent mount points from being automatically created
@@ -92,41 +78,6 @@ gnome::dconf_hash:
       idle-delay:
         value: uint32 900
     org/gnome/desktop/screensaver:
-      # Activate the idle timer
-      idle-activation-enabled:
-        value: true
-      # Lock the screen when the screensaver activates
-      lock-enabled:
-        value: true
-      # Ensure there is no delay in the screen lock:
-      lock-delay:
-        value: 0
-  simp_mate:
-    # MATE Settings
-    org/mate/media-handling:
-      # Prevent mount points from being automatically created
-      automount:
-        value: false
-      # Prevent automounted devices from opening automatically
-      automount-open:
-        value: false
-      # Prevent automounted devices from executing automatically
-      autorun-never:
-        value: true
-    org/mate/SettingsDaemon/plugins/media-keys:
-      # Ensures ctr-alt-del is not used for logout
-      # Setting this to just quotes causes the key sequence to be ignored
-      logout:
-        value: "''"
-    org/mate/power-manager:
-      # Ensure MATE does not react to the physical machines power buttons
-      button-power:
-        value: "'nothing'"
-    org/mate/session:
-      # Set the idle time to 15 minutes
-      idle-delay:
-        value: uint32 900
-    org/mate/screensaver:
       # Activate the idle timer
       idle-activation-enabled:
         value: true

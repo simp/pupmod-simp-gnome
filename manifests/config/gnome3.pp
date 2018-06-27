@@ -4,60 +4,15 @@
 class gnome::config::gnome3 {
   assert_private()
 
-  # Create an array of directories based on profile names
-  $_profile_list = $gnome::dconf_hash.keys
-  $_dir       = $_profile_list.map |$profile| { "/etc/dconf/db/${profile}.d" }
-  $_locks_dir = $_profile_list.map |$profile| { "/etc/dconf/db/${profile}.d/locks" }
-
-  ensure_resource('file', $_dir + $_locks_dir, {
-    ensure  => 'directory',
-    owner   => 'root',
-    group   => 'root',
-    mode    => '0644',
-    recurse => true,
-    purge   => true
-  })
-
-  gnome::dconf::profile { 'user':
+  dconf::profile { 'GNOME':
+    target  => 'user',
     entries => $gnome::dconf_profile_hierarchy
   }
 
-  $gnome::dconf_hash.each |String $profile_name, Hash $profiles| {
-    # Enable GNOME settings if using GNOME
-    if $profile_name == 'simp' {
-      if $gnome::enable_gnome {
-        $profiles.each |String $path, Hash $settings| {
-          gnome::dconf { "${profile_name} ${path}":
-            path          => $path,
-            profile       => $profile_name,
-            settings_hash => $settings
-          }
-        }
-      }
-    }
-
-    # Enable MATE settings if using MATE
-    elsif $profile_name == 'simp_mate' {
-      if $gnome::enable_mate {
-        $profiles.each |String $path, Hash $settings| {
-          gnome::dconf { "${profile_name} ${path}":
-            path          => $path,
-            profile       => $profile_name,
-            settings_hash => $settings
-          }
-        }
-      }
-    }
-
-    # Apply the remainder of the settings
-    else {
-      $profiles.each |String $path, Hash $settings| {
-        gnome::dconf { "${profile_name} ${path}":
-          path          => $path,
-          profile       => $profile_name,
-          settings_hash => $settings
-        }
-      }
+  $gnome::dconf_hash.each |String $profile_name, Hash $settings| {
+    dconf::settings { "GNOME dconf settings: ${profile_name}":
+      profile       => $profile_name,
+      settings_hash => $settings
     }
   }
 
