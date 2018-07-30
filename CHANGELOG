@@ -1,9 +1,11 @@
-* Fri May 18 2018 Trevor Vaughan <tvaughan@onyxpoint.com> - 8.0.0
+* Fri May 18 2018 Trevor Vaughan <tvaughan@onyxpoint.com> - 8.0.0-0
 - Removed all GDM and Dconf settings - BREAKING
   - Dconf has been moved to its own module
 - Ensure that all settings are 100% GNOME specific
 - Fixed a typo in the `dconf_hash` where `automount-never` was specified
   instead of `autorun-never`
+- Add support for OEL and Puppet 5
+
 
 * Wed Sep 20 2017 Liz Nemsick <lnemsick.simp@gmail.com> - 7.0.1-0
 - Add libxkbcommon-x11 to required package list for CentOS/RedHat 7.4.
