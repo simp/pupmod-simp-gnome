@@ -1,11 +1,9 @@
 ---
 fixtures:
   repositories:
-    concat:               "https://github.com/simp/puppetlabs-concat"
-    dconf:                "https://github.com/simp/pupmod-simp-dconf"
-    inifile:              "https://github.com/simp/puppetlabs-inifile"
-    polkit:               "https://github.com/simp/pupmod-simp-polkit"
-    simplib:              "https://github.com/simp/pupmod-simp-simplib"
-    stdlib:               "https://github.com/simp/puppetlabs-stdlib"
-  symlinks:
-    gnome: "#{source_dir}"
+    concat: https://github.com/simp/puppetlabs-concat
+    dconf: https://github.com/simp/pupmod-simp-dconf
+    inifile: https://github.com/simp/puppetlabs-inifile
+    polkit: https://github.com/simp/pupmod-simp-polkit
+    simplib: https://github.com/simp/pupmod-simp-simplib
+    stdlib: https://github.com/simp/puppetlabs-stdlib
