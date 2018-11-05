@@ -21,7 +21,7 @@ describe 'gnome class' do
         end
 
         it 'should have GNOME installed' do
-          host.check_for_command('gnome-session').should be true
+          expect(host.check_for_command('gnome-session')).to be true
         end
       end
     end
