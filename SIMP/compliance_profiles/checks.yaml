@@ -1,0 +1,81 @@
+---
+version: 2.0.0
+checks:
+  oval:com.puppet.forge.simp.gnome.enable_screensaver:
+    settings:
+      parameter: gnome::enable_screensaver
+      value: true
+    type: puppet-class-parameter
+    controls:
+      nist_800_53_rev4:AC-11: true
+    identifiers:
+      nist_800_53_rev4:
+      - AC-11
+  oval:com.puppet.forge.simp.gnome.dconf_hash:
+    settings:
+      parameter: gnome::dconf_hash
+      value:
+        simp_gnome:
+          org/gnome/desktop/media-handling:
+            automount:
+              value: false
+            automount-open:
+              value: false
+            autorun-never:
+              value: true
+          org/gnome/settings-daemon/plugins/media-keys:
+            logout:
+              value: "''"
+          org/gnome/settings-daemon/plugins/power:
+            active:
+              value: false
+          org/gnome/desktop/session:
+            idle-delay:
+              value: uint32 900
+          org/gnome/desktop/screensaver:
+            idle-activation-enabled:
+              value: true
+            lock-enabled:
+              value: true
+            lock-delay:
+              value: 5
+    type: puppet-class-parameter
+    controls:
+      disa_stig: true
+      cci:CCI-000056: true
+      cci:CCI-000057: true
+      cci:CCI-000366: true
+      RHEL-07-010060: true
+      RHEL-07-010062: true
+      RHEL-07-010070: true
+      RHEL-07-010081: true
+      RHEL-07-010082: true
+      RHEL-07-010100: true
+      RHEL-07-010101: true
+      RHEL-07-010110: true
+      RHEL-07-020230: true
+      SRG-OS-000028-GPOS-00009: true
+      SRG-OS-000029-GPOS-00010: true
+      SRG-OS-000030-GPOS-00010: true
+      SRG-OS-000480-GPOS-00227: true
+    identifiers:
+      disa_stig:
+      - CCI-000056
+      - CCI-000057
+      - CCI-000366
+      - RHEL-07-010060
+      - RHEL-07-010062
+      - RHEL-07-010070
+      - RHEL-07-010081
+      - RHEL-07-010082
+      - RHEL-07-010100
+      - RHEL-07-010101
+      - RHEL-07-010110
+      - RHEL-07-020230
+      - SRG-OS-000028-GPOS-00009
+      - SRG-OS-000029-GPOS-00010
+      - SRG-OS-000030-GPOS-00010
+      - SRG-OS-000480-GPOS-00227
+    confine:
+      osfamily: RedHat
+      operatingsystemmajrelease: '7'
