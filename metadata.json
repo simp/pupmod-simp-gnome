@@ -1,6 +1,6 @@
 {
   "name": "simp-gnome",
-  "version": "8.0.1",
+  "version": "8.0.2",
   "author": "SIMP Team",
   "summary": "Provides useful settings to set up the GNOME desktop environment",
   "license": "Apache-2.0",
