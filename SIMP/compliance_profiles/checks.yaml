@@ -7,9 +7,10 @@ checks:
       value: true
     type: puppet-class-parameter
     controls:
-      nist_800_53_rev4:AC-11: true
+      nist_800_53:rev4: true
+      nist_800_53:rev4:AC-11: true
     identifiers:
-      nist_800_53_rev4:
+      nist_800_53:rev4:
       - AC-11
   oval:com.puppet.forge.simp.gnome.dconf_hash:
     settings:
