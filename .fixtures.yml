@@ -6,5 +6,6 @@ fixtures:
     dconf: https://github.com/simp/pupmod-simp-dconf
     inifile: https://github.com/simp/puppetlabs-inifile
     polkit: https://github.com/simp/pupmod-simp-polkit
+    simp_options: https://github.com/simp/pupmod-simp-simp_options
     simplib: https://github.com/simp/pupmod-simp-simplib
     stdlib: https://github.com/simp/puppetlabs-stdlib
