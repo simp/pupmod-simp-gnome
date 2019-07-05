@@ -2,8 +2,7 @@
 .yardoc
 dist/
 pkg/
-spec/fixtures/
-spec/rp_env/
+spec/
 !/spec/hieradata/default.yaml
 !/spec/fixtures/site.pp
 .rspec_system

@@ -31,6 +31,9 @@ checks:
               value: 5
     type: puppet-class-parameter
     controls:
+      nist_800_53:rev4: true
+      nist_800_53:rev4:AC-11:b: true
+      nist_800_53:rev4:CM-6:b: true
       disa_stig: true
       cci:CCI-000056: true
       cci:CCI-000057: true
