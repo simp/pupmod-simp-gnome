@@ -28,90 +28,102 @@ describe 'compliance_markup', type: :class do
     ] + expected_classes.map{|c| Regexp.new("^(?!#{c}(::.*)?)")}
   }
 
+  valid_systems = {
+    'CentOS'      => '7',
+    'RedHat'      => '7',
+    'OracleLinux' => '7'
+  }
+
   on_supported_os.each do |os, os_facts|
     context "on #{os}" do
-      compliance_profiles.each do |target_profile|
-        context "with compliance profile '#{target_profile}'" do
-          let(:facts){
-            os_facts.merge({
-              :target_compliance_profile => target_profile
-            })
-          }
+      if valid_systems[os_facts[:operatingsystem]] && (os_facts[:operatingsystemmajrelease] == valid_systems[os_facts[:operatingsystem]])
+        compliance_profiles.each do |target_profile|
+          context "with compliance profile '#{target_profile}'" do
+            let(:facts){
+              os_facts.merge({
+                :target_compliance_profile => target_profile
+              })
+            }
 
-          let(:pre_condition) {%(
-            #{expected_classes.map{|c| %{include #{c}}}.join("\n")}
-          )}
+            let(:pre_condition) {%(
+              #{expected_classes.map{|c| %{include #{c}}}.join("\n")}
+            )}
 
-          let(:hieradata){ 'compliance-engine' }
+            let(:hieradata){ 'compliance-engine' }
 
-          it { is_expected.to compile }
+            it { is_expected.to compile }
 
-          let(:compliance_report) {
-            @compliance_report ||= JSON.load(
-                catalogue.resource("File[#{facts[:puppet_vardir]}/compliance_report.json]")[:content]
-              )
+            let(:compliance_report) {
+              @compliance_report ||= JSON.load(
+                  catalogue.resource("File[#{facts[:puppet_vardir]}/compliance_report.json]")[:content]
+                )
 
-            @compliance_report
-          }
+              @compliance_report
+            }
 
-          let(:compliance_profile_data) {
-            @compliance_profile_data ||= compliance_report['compliance_profiles'][target_profile]
+            let(:compliance_profile_data) {
+              @compliance_profile_data ||= compliance_report['compliance_profiles'][target_profile]
 
-            @compliance_profile_data
-          }
+              @compliance_profile_data
+            }
 
-          it 'should have a compliance profile report' do
-            expect(compliance_profile_data).to_not be_nil
-          end
+            it 'should have a compliance profile report' do
+              expect(compliance_profile_data).to_not be_nil
+            end
 
-          it 'should have a 100% compliant report' do
-            expect(compliance_profile_data['summary']['percent_compliant']).to eq(100)
-          end
+            it 'should have a 100% compliant report' do
+              expect(compliance_profile_data['summary']['percent_compliant']).to eq(100)
+            end
 
-          # The list of report sections that should not exist and if they do
-          # exist, we need to know what is wrong so that we can fix them
-          report_validators = [
-            # This should *always* be empty on enforcement
-            'non_compliant',
-            # If something is set here, either the upstream API changed or you
-            # have a typo in your data
-            'documented_missing_parameters',
-            # If something is set here, you have included enforcement data that
-            # you are not testing so you either need to remove it from your
-            # profile or you need to add the class/defined type for validation
-            #
-            # Unless this is a completely comprehensive data profile, with all
-            # classes included, this report may be useless and is disabled by
-            # default.
-            #
-            'documented_missing_resources'
-          ]
+            # The list of report sections that should not exist and if they do
+            # exist, we need to know what is wrong so that we can fix them
+            report_validators = [
+              # This should *always* be empty on enforcement
+              'non_compliant',
+              # If something is set here, either the upstream API changed or you
+              # have a typo in your data
+              'documented_missing_parameters',
+              # If something is set here, you have included enforcement data that
+              # you are not testing so you either need to remove it from your
+              # profile or you need to add the class/defined type for validation
+              #
+              # Unless this is a completely comprehensive data profile, with all
+              # classes included, this report may be useless and is disabled by
+              # default.
+              #
+              'documented_missing_resources'
+            ]
 
-          report_validators.each do |report_section|
-            it "should have no issues with the '#{report_section}' report" do
-              if compliance_profile_data[report_section]
-                # This just gets us a good print out of what went wrong
-                  compliance_profile_data[report_section].delete_if{ |item|
-                    rm = false
+            report_validators.each do |report_section|
+              it "should have no issues with the '#{report_section}' report" do
+                if compliance_profile_data[report_section]
+                  # This just gets us a good print out of what went wrong
+                    compliance_profile_data[report_section].delete_if{ |item|
+                      rm = false
 
-                    Array(allowed_failures[report_section]).each do |allowed|
-                      if allowed.is_a?(Regexp)
-                        if allowed.match?(item)
-                          rm = true
-                          break
+                      Array(allowed_failures[report_section]).each do |allowed|
+                        if allowed.is_a?(Regexp)
+                          if allowed.match?(item)
+                            rm = true
+                            break
+                          end
+                        else
+                          rm = (allowed == item)
                         end
-                      else
-                        rm = (allowed == item)
                       end
-                    end
 
-                    rm
-                  }
+                      rm
+                    }
 
-                expect(compliance_profile_data[report_section]).to eq([])
+                  expect(compliance_profile_data[report_section]).to eq([])
+                end
               end
             end
           end
+        end
+      else
+        it 'should be on an OS with compliance engine data' do
+          skip "#{os_facts[:operatingsystem]} #{os_facts[:operatingsystemmajrelease]} does not have any compliance engine data"
         end
       end
     end
