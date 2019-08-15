@@ -1,6 +1,6 @@
 skips = {}
 overrides = []
-subsystems = [ 'gdm', 'gnome', 'gnome3' ]
+subsystems = ['gnome', 'gnome3' ]
 
 
 require_controls 'disa_stig-el7-baseline' do
