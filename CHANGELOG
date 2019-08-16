@@ -1,4 +1,7 @@
-* Thu Jun 06 2019 Steven Pritchard <steven.pritchard@onyxpoint.com> -8.1.0-0
+* Thu Aug 15 2019 Trevor Vaughan <tvaughan@onyxpoint.com> - 8.1.1-0
+- Fix compliance engine tests
+
+* Thu Jun 06 2019 Steven Pritchard <steven.pritchard@onyxpoint.com> - 8.1.0-0
 - Add v2 compliance_markup data
 
 * Thu Mar 07 2019 Liz Nemsick <lnemsick.simp@gmail.com> - 8.0.1-0
