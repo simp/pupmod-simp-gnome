@@ -15,8 +15,6 @@ lookup_options:
 
 gnome::configure: true
 
-gnome::enable_gnome: true
-
 gnome::packages:
   gnome-session: ~
   gnome-session-xsession: ~

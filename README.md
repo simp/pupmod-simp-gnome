@@ -81,8 +81,7 @@ gnome::dconf_hash:
 
 ## Reference
 
-See the [API documentation](http://www.puppetmodule.info/github/simp/pupmod-simp-gnome/master)
-or run `puppet strings` for full details.
+See the [API documentation](./REFERENCE.md) for details.
 
 ## Limitations
 

@@ -1,0 +1,6 @@
+---
+gnome::packages:
+  at-spi2-atk: ~
+  control-center: ~
+  dconf: ~
+  gnome-desktop3: ~

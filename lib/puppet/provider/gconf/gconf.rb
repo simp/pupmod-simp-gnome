@@ -1,6 +1,10 @@
 Puppet::Type.type(:gconf).provide(:ruby) do
   require 'shellwords'
 
+  desc <<-EOM
+    Update system gconf settings
+  EOM
+
   def lookup(schema, key)
     if resource[:force] == :false
       # Lookup a value. Throw away any garbage from gconftool-2.

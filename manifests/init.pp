@@ -43,7 +43,6 @@ class gnome (
   Gnome::GconfSettings                 $gconf_hash,
   Hash[String[1], Dconf::SettingsHash] $dconf_hash,
   Dconf::DBSettings                    $dconf_profile_hierarchy,
-  Boolean                              $enable_gnome,
   Hash[String[1], Optional[Hash]]      $packages,
   Simplib::PackageEnsure               $package_ensure           = simplib::lookup('simp_options::package_ensure', { 'default_value' => 'installed' })
 ) {
