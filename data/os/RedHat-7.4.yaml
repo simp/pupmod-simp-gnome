@@ -1,3 +1,6 @@
 ---
 gnome::packages:
   libxkbcommon-x11: ~
+  libgnome: ~
+  libgnomeui: ~
+

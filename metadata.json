@@ -1,6 +1,7 @@
 {
   "name": "simp-gnome",
-  "version": "8.2.0",
+
+  "version": "8.1.3",
   "author": "SIMP Team",
   "summary": "Provides useful settings to set up the GNOME desktop environment",
   "license": "Apache-2.0",
@@ -34,7 +35,6 @@
     {
       "operatingsystem": "CentOS",
       "operatingsystemrelease": [
-        "6",
         "7",
         "8"
       ]
@@ -42,7 +42,6 @@
     {
       "operatingsystem": "RedHat",
       "operatingsystemrelease": [
-        "6",
         "7",
         "8"
       ]
@@ -50,7 +49,6 @@
     {
       "operatingsystem": "OracleLinux",
       "operatingsystemrelease": [
-        "6",
         "7",
         "8"
       ]

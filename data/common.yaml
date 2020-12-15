@@ -21,9 +21,6 @@ gnome::packages:
   gnome-settings-daemon: ~
   gnome-terminal: ~
   gnome-user-docs: ~
-  im-chooser: ~
-  libgnome: ~
-  libgnomeui: ~
   nautilus: ~
   orca: ~
   yelp: ~

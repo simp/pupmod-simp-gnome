@@ -4,3 +4,7 @@ gnome::packages:
   control-center: ~
   dconf: ~
   gnome-desktop3: ~
+  im-chooser: ~
+  libgnome: ~
+  libgnomeui: ~
+

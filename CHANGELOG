@@ -1,5 +1,8 @@
-* Thu Dec 12 2019 Trevor Vaughan <tvaughan@onyxpoint.com> - 8.2.0-0
+* Thu Dec 12 2019 Trevor Vaughan <tvaughan@onyxpoint.com> - 8.1.3-0
 - Add EL8 support
+
+* Thu Jul 23 2020 Jeanne Greulich <jeanne.greulich@onyxpoint.com> - 8.1.2-0
+- update the upper bound of simplib for SIMP 6.5 release
 
 * Thu Aug 15 2019 Trevor Vaughan <tvaughan@onyxpoint.com> - 8.1.1-0
 - Fix compliance engine tests
