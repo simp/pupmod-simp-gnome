@@ -1,6 +1,4 @@
 ---
 gnome::packages:
-  at-spi2-atk: ~
-  control-center: ~
-  dconf: ~
-  gnome-desktop3: ~
+  gnome-control-center: ~
+  gnome-session-wayland-session: ~

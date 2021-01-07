@@ -6,9 +6,7 @@
 #   @see data/common.yaml
 #
 # @param gconf_hash
-#   gconf settings specific to Gnome 2
-#
-#   @see data/common.yaml
+#   This parameter has be depricated.
 #
 # @param dconf_hash
 #   dconf settings specific to Gnome 3
@@ -40,10 +38,10 @@
 #
 class gnome (
   Boolean                              $configure,
-  Gnome::GconfSettings                 $gconf_hash,
   Hash[String[1], Dconf::SettingsHash] $dconf_hash,
   Dconf::DBSettings                    $dconf_profile_hierarchy,
   Hash[String[1], Optional[Hash]]      $packages,
+  Optional[Hash]                       $gconf_hash = undef,
   Simplib::PackageEnsure               $package_ensure           = simplib::lookup('simp_options::package_ensure', { 'default_value' => 'installed' })
 ) {
 
