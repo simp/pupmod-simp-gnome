@@ -22,13 +22,18 @@ checks:
           org/gnome/desktop/session:
             idle-delay:
               value: uint32 900
+          org/gnome/desktop/lockdown:
+            disable-lock-screen:
+              value: false
+            disable-show-password:
+              value: true
           org/gnome/desktop/screensaver:
             idle-activation-enabled:
               value: true
             lock-enabled:
               value: true
             lock-delay:
-              value: 5
+              value: uint32 5
     type: puppet-class-parameter
     controls:
       nist_800_53:rev4: true

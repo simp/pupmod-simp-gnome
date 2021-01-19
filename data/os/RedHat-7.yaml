@@ -1,6 +1,7 @@
 ---
 gnome::packages:
-  at-spi2-atk: ~
+  im-chooser: ~
+  libgnome: ~
+  libgnomeui: ~
   control-center: ~
-  dconf: ~
-  gnome-desktop3: ~
+

@@ -1,6 +1,6 @@
 ---
 lookup_options:
-  '^gnome::(d|g)conf_hash$':
+  gnome::dconf_hash:
     merge:
       strategy: deep
       knockout_prefix: --
@@ -8,42 +8,21 @@ lookup_options:
     merge:
       strategy: deep
       knockout_prefix: --
-  gnome::mate_packages:
-    merge:
-      strategy: deep
-      knockout_prefix: --
 
 gnome::configure: true
 
-gnome::enable_gnome: true
-
 gnome::packages:
+  at-spi2-atk: ~
+  dconf: ~
+  gnome-desktop3: ~
   gnome-session: ~
   gnome-session-xsession: ~
   gnome-settings-daemon: ~
   gnome-terminal: ~
   gnome-user-docs: ~
-  im-chooser: ~
-  libgnome: ~
-  libgnomeui: ~
   nautilus: ~
   orca: ~
   yelp: ~
-
-gnome::enable_mate: false
-
-gnome::mate_packages:
-  caja-open-terminal: ~
-  caja: ~
-  gnome-terminal: ~
-  marco: ~
-  mate-desktop: ~
-  mate-polkit: ~
-  mate-power-manager: ~
-  mate-screensaver: ~
-  mate-session-manager: ~
-  mate-settings-daemon: ~
-  mate-themes: ~
 
 gnome::dconf_profile_hierarchy:
   simp_gnome:
@@ -77,6 +56,11 @@ gnome::dconf_hash:
       # Set the idle time to 15 minutes
       idle-delay:
         value: uint32 900
+    org/gnome/desktop/lockdown:
+      disable-lock-screen:
+        value: false
+      disable-show-password:
+        value: true
     org/gnome/desktop/screensaver:
       # Activate the idle timer
       idle-activation-enabled:
@@ -86,20 +70,5 @@ gnome::dconf_hash:
         value: true
       # Ensure there is no delay in the screen lock:
       lock-delay:
-        value: 0
+        value: uint32 0
 
-gnome::gconf_hash:
-  screensaver_enabled:
-    # Enable the screensaver
-    value: true
-    type: bool
-    schema: mandatory
-  screensaver_timeout:
-    # 15 minute screen lock
-    value: 15
-    type: int
-  screensaver_lock:
-    # Require password to open screensaver
-    value: true
-    type: bool
-    schema: mandatory

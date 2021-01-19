@@ -16,7 +16,7 @@
 
 ## Description
 
-`gnome` is a Puppet module that installs and manages a GNOME 2 or 3 installation.
+`gnome` is a Puppet module that installs and manages a GNOME 3 installation.
 
 ### This is a SIMP module
 
@@ -81,8 +81,7 @@ gnome::dconf_hash:
 
 ## Reference
 
-See the [API documentation](http://www.puppetmodule.info/github/simp/pupmod-simp-gnome/master)
-or run `puppet strings` for full details.
+See the [API documentation](./REFERENCE.md) for details.
 
 ## Limitations
 
@@ -92,7 +91,7 @@ and compatible distributions, such as CentOS.
 Please see the [`metadata.json` file](./metadata.json) for the most up-to-date
 list of supported operating systems, Puppet versions, and module dependencies.
 
-This module is compatible with GDM v2, v3.
+This module is compatible with GDM v3.
 
 ## Development
 
