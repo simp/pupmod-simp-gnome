@@ -1,6 +1,6 @@
-* Wed Jan 13 2021 Jeanne Greulich <jeanne.greulich@onyxpoint.com> - 8.2.0-0
+* Wed Jan 13 2021 Jeanne Greulich <jeanne.greulich@onyxpoint.com> - 9.0.0-0
 - Add EL8 support
-  - add dconf settings to  dconf hash to ensure users can not disable
+  - add dconf settings to dconf hash to ensure users can not disable
     lock screen or show passwords in plain text
   - update package lists.  Common package list is now packages common to
     gnome V3.
@@ -8,7 +8,8 @@
   - removed support for gnome2
   - removed the gconf parameters and settings.
   - removed test logic
-  - depricated parameter gnome::gconf_hash
+  - removed parameter gnome::gconf_hash
+  - removed parameter gnome::enable_gnome
 
 * Thu Jul 23 2020 Jeanne Greulich <jeanne.greulich@onyxpoint.com> - 8.1.2-0
 - update the upper bound of simplib for SIMP 6.5 release

@@ -16,15 +16,21 @@
 
 ## Classes
 
-### `gnome`
+### <a name="gnome"></a>`gnome`
 
 Installs and configures a minimal Gnome environment
 
 #### Parameters
 
-The following parameters are available in the `gnome` class.
+The following parameters are available in the `gnome` class:
 
-##### `configure`
+* [`configure`](#configure)
+* [`dconf_hash`](#dconf_hash)
+* [`dconf_profile_hierarchy`](#dconf_profile_hierarchy)
+* [`packages`](#packages)
+* [`package_ensure`](#package_ensure)
+
+##### <a name="configure"></a>`configure`
 
 Data type: `Boolean`
 
@@ -32,15 +38,7 @@ Use the module to configure Gnome
 
 @see data/common.yaml
 
-##### `gconf_hash`
-
-Data type: `Optional[Hash]`
-
-This parameter has be depricated.
-
-Default value: ``undef``
-
-##### `dconf_hash`
+##### <a name="dconf_hash"></a>`dconf_hash`
 
 Data type: `Hash[String[1], Dconf::SettingsHash]`
 
@@ -49,7 +47,7 @@ dconf settings specific to Gnome 3
 @see data/common.yaml
 @see https://wiki.gnome.org/Projects/dconf/SystemAdministrators
 
-##### `dconf_profile_hierarchy`
+##### <a name="dconf_profile_hierarchy"></a>`dconf_profile_hierarchy`
 
 Data type: `Dconf::DBSettings`
 
@@ -58,7 +56,7 @@ Dconf db priority
 @see https://help.gnome.org/admin/system-admin-guide/stable/dconf.html.en
 @see https://wiki.gnome.org/Projects/dconf/SystemAdministrators
 
-##### `packages`
+##### <a name="packages"></a>`packages`
 
 Data type: `Hash[String[1], Optional[Hash]]`
 
@@ -73,7 +71,7 @@ A Hash of packages to be installed
 
 @see data/common.yaml
 
-##### `package_ensure`
+##### <a name="package_ensure"></a>`package_ensure`
 
 Data type: `Simplib::PackageEnsure`
 
