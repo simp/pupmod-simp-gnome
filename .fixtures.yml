@@ -1,15 +1,15 @@
 ---
 fixtures:
   repositories:
-    compliance_markup: https://github.com/simp/pupmod-simp-compliance_markup
-    concat: https://github.com/simp/puppetlabs-concat
-    dconf: https://github.com/simp/pupmod-simp-dconf
-    inifile: https://github.com/simp/puppetlabs-inifile
-    polkit: https://github.com/simp/pupmod-simp-polkit
-    simp_options: https://github.com/simp/pupmod-simp-simp_options
-    simplib: https://github.com/simp/pupmod-simp-simplib
-    stdlib: https://github.com/simp/puppetlabs-stdlib
+    compliance_markup: https://github.com/simp/pupmod-simp-compliance_markup.git
+    concat: https://github.com/simp/puppetlabs-concat.git
+    dconf: https://github.com/simp/pupmod-simp-dconf.git
+    inifile: https://github.com/simp/puppetlabs-inifile.git
+    polkit: https://github.com/simp/pupmod-simp-polkit.git
+    simp_options: https://github.com/simp/pupmod-simp-simp_options.git
+    simplib: https://github.com/simp/pupmod-simp-simplib.git
+    stdlib: https://github.com/simp/puppetlabs-stdlib.git
     disa_stig-el7-baseline:
-      repo: https://github.com/simp/inspec-profile-disa_stig-el7
+      repo: https://github.com/simp/inspec-profile-disa_stig-el7.git
       branch:  master
       target: spec/fixtures/inspec_deps/inspec_profiles/profiles

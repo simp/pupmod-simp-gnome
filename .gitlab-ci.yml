@@ -348,7 +348,7 @@ pup6.x-compliance:
   <<: *pup_6_x
   <<: *compliance_base
   script:
-    - 'BEAKER_fips=yes bundle exec rake beaker:suites[compliance]'
+    - 'BEAKER_fips=yes bundle exec rake beaker:suites[compliance,default]'
 
 pup6.pe:
   <<: *pup_6_pe
@@ -374,3 +374,9 @@ pup6.pe-oel-fips:
   <<: *with_SIMP_ACCEPTANCE_MATRIX_LEVEL_3
   script:
     - 'BEAKER_fips=yes bundle exec rake beaker:suites[default,oel]'
+
+pup7.x:
+  <<: *pup_7_x
+  <<: *acceptance_base
+  script:
+    - 'bundle exec rake beaker:suites[default,default]'
