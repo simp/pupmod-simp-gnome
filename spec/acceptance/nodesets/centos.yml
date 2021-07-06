@@ -23,7 +23,7 @@ HOSTS:
     roles:
       - client
     platform:   el-8-x86_64
-    box:        centos/8
+    box:        generic/centos8
     hypervisor: <%= hypervisor %>
     yum_repos:
       chef-current:
