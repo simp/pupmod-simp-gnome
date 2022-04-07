@@ -95,4 +95,4 @@ This module is compatible with GDM v3.
 
 ## Development
 
-Please read our [Contribution Guide] (https://simp.readthedocs.io/en/stable/contributors_guide/index.html)
+Please read our [Contribution Guide](https://simp.readthedocs.io/en/stable/contributors_guide/index.html)
