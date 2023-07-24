@@ -1,0 +1,4 @@
+---
+gnome::packages:
+  gnome-control-center: ~
+  gnome-session-wayland-session: ~
