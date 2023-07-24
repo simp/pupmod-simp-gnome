@@ -37,21 +37,21 @@ describe 'gnome' do
 
         # gnome::install
         packages_common.each do |pkg|
-          it { is_expected.to contain_package(pkg).with_ensure('present') }
+          it { is_expected.to contain_package(pkg).with_ensure(/\A(present|installed)\Z/) }
         end
         if os_facts[:os][:release][:major] == '7'
           packages_el7.each do |pkg|
-            it { is_expected.to contain_package(pkg).with_ensure('present') }
+            it { is_expected.to contain_package(pkg).with_ensure(/\A(present|installed)\Z/) }
           end
         end
         if os_facts[:os][:release][:major] == '8'
           packages_el8.each do |pkg|
-            it { is_expected.to contain_package(pkg).with_ensure('present') }
+            it { is_expected.to contain_package(pkg).with_ensure(/\A(present|installed)\Z/) }
           end
         end
         if os_facts[:os][:release][:full] == '7.4'
           packages_el7_4.each do |pkg|
-            it { is_expected.to contain_package(pkg).with_ensure('present') }
+            it { is_expected.to contain_package(pkg).with_ensure(/\A(present|installed)\Z/) }
           end
         end
 
@@ -97,7 +97,7 @@ describe 'gnome' do
           'gnome-terminal' => :undef
         } }}
         it { is_expected.to create_package('good-package').with_ensure('1.2.3') }
-        it { is_expected.to create_package('gnome-terminal').with_ensure('present') }
+        it { is_expected.to create_package('gnome-terminal').with_ensure(/\A(present|installed)\Z/) }
       end
 
       context 'with an overridden dconf_hash' do
