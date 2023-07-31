@@ -24,13 +24,13 @@ Installs and configures a minimal Gnome environment
 
 The following parameters are available in the `gnome` class:
 
-* [`configure`](#configure)
-* [`dconf_hash`](#dconf_hash)
-* [`dconf_profile_hierarchy`](#dconf_profile_hierarchy)
-* [`packages`](#packages)
-* [`package_ensure`](#package_ensure)
+* [`configure`](#-gnome--configure)
+* [`dconf_hash`](#-gnome--dconf_hash)
+* [`dconf_profile_hierarchy`](#-gnome--dconf_profile_hierarchy)
+* [`packages`](#-gnome--packages)
+* [`package_ensure`](#-gnome--package_ensure)
 
-##### <a name="configure"></a>`configure`
+##### <a name="-gnome--configure"></a>`configure`
 
 Data type: `Boolean`
 
@@ -38,7 +38,7 @@ Use the module to configure Gnome
 
 @see data/common.yaml
 
-##### <a name="dconf_hash"></a>`dconf_hash`
+##### <a name="-gnome--dconf_hash"></a>`dconf_hash`
 
 Data type: `Hash[String[1], Dconf::SettingsHash]`
 
@@ -47,7 +47,7 @@ dconf settings specific to Gnome 3
 @see data/common.yaml
 @see https://wiki.gnome.org/Projects/dconf/SystemAdministrators
 
-##### <a name="dconf_profile_hierarchy"></a>`dconf_profile_hierarchy`
+##### <a name="-gnome--dconf_profile_hierarchy"></a>`dconf_profile_hierarchy`
 
 Data type: `Dconf::DBSettings`
 
@@ -56,7 +56,7 @@ Dconf db priority
 @see https://help.gnome.org/admin/system-admin-guide/stable/dconf.html.en
 @see https://wiki.gnome.org/Projects/dconf/SystemAdministrators
 
-##### <a name="packages"></a>`packages`
+##### <a name="-gnome--packages"></a>`packages`
 
 Data type: `Hash[String[1], Optional[Hash]]`
 
@@ -71,7 +71,7 @@ A Hash of packages to be installed
 
 @see data/common.yaml
 
-##### <a name="package_ensure"></a>`package_ensure`
+##### <a name="-gnome--package_ensure"></a>`package_ensure`
 
 Data type: `Simplib::PackageEnsure`
 
