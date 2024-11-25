@@ -36,7 +36,7 @@ describe 'compliance_markup', type: :class do
 
   on_supported_os.each do |os, os_facts|
     context "on #{os}" do
-      if valid_systems[os_facts[:operatingsystem]] && (os_facts[:operatingsystemmajrelease] == valid_systems[os_facts[:operatingsystem]])
+      if valid_systems[os_facts[:os][:name]] && (os_facts[:os][:release][:major] == valid_systems[os_facts[:os][:name]])
         compliance_profiles.each do |target_profile|
           context "with compliance profile '#{target_profile}'" do
             let(:facts){
@@ -123,7 +123,7 @@ describe 'compliance_markup', type: :class do
         end
       else
         it 'should be on an OS with compliance engine data' do
-          skip "#{os_facts[:operatingsystem]} #{os_facts[:operatingsystemmajrelease]} does not have any compliance engine data"
+          skip "#{os_facts[:os][:name]} #{os_facts[:os][:release][:major]} does not have any compliance engine data"
         end
       end
     end
