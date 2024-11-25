@@ -75,5 +75,5 @@ checks:
       - SRG-OS-000030-GPOS-00010
       - SRG-OS-000480-GPOS-00227
     confine:
-      osfamily: RedHat
-      operatingsystemmajrelease: '7'
+      os.family: RedHat
+      os.release.major: '7'
