@@ -10,7 +10,7 @@ packages_common = [
   'gnome-user-docs',
   'nautilus',
   'orca',
-  'yelp'
+  'yelp',
 ]
 
 packages_el8 = [
@@ -37,21 +37,21 @@ describe 'gnome' do
 
         # gnome::install
         packages_common.each do |pkg|
-          it { is_expected.to contain_package(pkg).with_ensure(/\A(present|installed)\Z/) }
+          it { is_expected.to contain_package(pkg).with_ensure(%r{\A(present|installed)\Z}) }
         end
         if os_facts[:os][:release][:major] == '7'
           packages_el7.each do |pkg|
-            it { is_expected.to contain_package(pkg).with_ensure(/\A(present|installed)\Z/) }
+            it { is_expected.to contain_package(pkg).with_ensure(%r{\A(present|installed)\Z}) }
           end
         end
         if os_facts[:os][:release][:major] == '8'
           packages_el8.each do |pkg|
-            it { is_expected.to contain_package(pkg).with_ensure(/\A(present|installed)\Z/) }
+            it { is_expected.to contain_package(pkg).with_ensure(%r{\A(present|installed)\Z}) }
           end
         end
         if os_facts[:os][:release][:full] == '7.4'
           packages_el7_4.each do |pkg|
-            it { is_expected.to contain_package(pkg).with_ensure(/\A(present|installed)\Z/) }
+            it { is_expected.to contain_package(pkg).with_ensure(%r{\A(present|installed)\Z}) }
           end
         end
 
@@ -60,10 +60,11 @@ describe 'gnome' do
         it { is_expected.to create_polkit__authorization__basic_policy('Allow anyone to restart system') }
 
         # data structure driven
-        it { is_expected.to create_dconf__settings('GNOME dconf settings: simp_gnome').with({
-          :ensure        => 'present',
-          :profile       => 'simp_gnome',
-          :settings_hash => {
+        it {
+          is_expected.to create_dconf__settings('GNOME dconf settings: simp_gnome').with({
+                                                                                           ensure: 'present',
+          profile: 'simp_gnome',
+          settings_hash: {
             'org/gnome/desktop/media-handling' => {
               'automount'               => { 'value' => false },
               'automount-open'          => { 'value' => false },
@@ -88,51 +89,59 @@ describe 'gnome' do
               'lock-delay'              => { 'value' => 'uint32 0' }
             }
           }
-        }) }
+                                                                                         })
+        }
       end
 
       context 'with a more populated packages' do
-        let(:params) {{ :packages => {
-          'good-package' => { 'ensure' => '1.2.3' },
-          'gnome-terminal' => :undef
-        } }}
+        let(:params) do
+          { packages: {
+            'good-package' => { 'ensure' => '1.2.3' },
+         'gnome-terminal' => :undef
+          } }
+        end
+
         it { is_expected.to create_package('good-package').with_ensure('1.2.3') }
-        it { is_expected.to create_package('gnome-terminal').with_ensure(/\A(present|installed)\Z/) }
+        it { is_expected.to create_package('gnome-terminal').with_ensure(%r{\A(present|installed)\Z}) }
       end
 
       context 'with an overridden dconf_hash' do
-        let(:params) {{
-          'dconf_hash' => {
-            'simp' => {
-              'org/gnome/desktop/background' => {
-                'picture-uri' => { 'value' => '/wallpaper/path' }
+        let(:params) do
+          {
+            'dconf_hash' => {
+              'simp' => {
+                'org/gnome/desktop/background' => {
+                  'picture-uri' => { 'value' => '/wallpaper/path' }
+                }
               }
             }
           }
-        }}
+        end
+
         it { is_expected.to create_dconf__settings('GNOME dconf settings: simp').with_profile('simp') }
       end
       context 'with multiple profiles in dconf_hash' do
-        let(:params) {{
-          'dconf_hash' => {
-            'simp' => {
-              'org/gnome/desktop/background' => {
-                'picture-uri' => { 'value' => '/wallpaper/path' }
-              }
-            },
-            'site' => {
-              'system/proxy/http' => {
-                'host' => { 'value' => '0.0.0.0' }
+        let(:params) do
+          {
+            'dconf_hash' => {
+              'simp' => {
+                'org/gnome/desktop/background' => {
+                  'picture-uri' => { 'value' => '/wallpaper/path' }
+                }
+              },
+              'site' => {
+                'system/proxy/http' => {
+                  'host' => { 'value' => '0.0.0.0' }
+                }
               }
             }
           }
-        }}
+        end
 
         it { is_expected.to create_dconf__settings('GNOME dconf settings: simp').with_profile('simp') }
 
         it { is_expected.to create_dconf__settings('GNOME dconf settings: site').with_profile('site') }
       end
-
     end
   end
 end
