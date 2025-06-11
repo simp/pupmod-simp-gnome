@@ -36,6 +36,7 @@ describe 'gnome' do
         it { is_expected.to create_class('gnome') }
 
         # gnome::install
+        # rubocop:disable RSpec/RepeatedExample
         packages_common.each do |pkg|
           it { is_expected.to contain_package(pkg).with_ensure(%r{\A(present|installed)\Z}) }
         end
@@ -54,6 +55,7 @@ describe 'gnome' do
             it { is_expected.to contain_package(pkg).with_ensure(%r{\A(present|installed)\Z}) }
           end
         end
+        # rubocop:enable RSpec/RepeatedExample
 
         # gnome::config
         it { is_expected.to create_polkit__authorization__basic_policy('Allow anyone to shutdown system') }
