@@ -83,14 +83,14 @@ describe 'gnome' do
             },
             'org/gnome/desktop/lockdown' => {
               'disable-lock-screen'              => { 'value' => false },
-              'disable-show-password'            => { 'value' => true }
+              'disable-show-password'            => { 'value' => true },
             },
             'org/gnome/desktop/screensaver' => {
               'idle-activation-enabled' => { 'value' => true },
               'lock-enabled'            => { 'value' => true },
-              'lock-delay'              => { 'value' => 'uint32 0' }
-            }
-          }
+              'lock-delay'              => { 'value' => 'uint32 0' },
+            },
+          },
                                                                                          })
         }
       end
@@ -99,7 +99,7 @@ describe 'gnome' do
         let(:params) do
           { packages: {
             'good-package' => { 'ensure' => '1.2.3' },
-         'gnome-terminal' => :undef
+         'gnome-terminal' => :undef,
           } }
         end
 
@@ -113,10 +113,10 @@ describe 'gnome' do
             'dconf_hash' => {
               'simp' => {
                 'org/gnome/desktop/background' => {
-                  'picture-uri' => { 'value' => '/wallpaper/path' }
-                }
-              }
-            }
+                  'picture-uri' => { 'value' => '/wallpaper/path' },
+                },
+              },
+            },
           }
         end
 
@@ -128,15 +128,15 @@ describe 'gnome' do
             'dconf_hash' => {
               'simp' => {
                 'org/gnome/desktop/background' => {
-                  'picture-uri' => { 'value' => '/wallpaper/path' }
-                }
+                  'picture-uri' => { 'value' => '/wallpaper/path' },
+                },
               },
               'site' => {
                 'system/proxy/http' => {
-                  'host' => { 'value' => '0.0.0.0' }
-                }
-              }
-            }
+                  'host' => { 'value' => '0.0.0.0' },
+                },
+              },
+            },
           }
         end
 
