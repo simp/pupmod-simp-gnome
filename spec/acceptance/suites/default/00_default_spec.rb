@@ -4,8 +4,8 @@ test_name 'gnome class'
 
 describe 'gnome class' do
   let(:manifest) do
-    <<-EOS
-      include '::gnome'
+    <<~EOS
+      include 'gnome'
     EOS
   end
 

@@ -63,44 +63,46 @@ describe 'gnome' do
 
         # data structure driven
         it {
-          is_expected.to create_dconf__settings('GNOME dconf settings: simp_gnome').with({
-                                                                                           ensure: 'present',
-          profile: 'simp_gnome',
-          settings_hash: {
-            'org/gnome/desktop/media-handling' => {
-              'automount'               => { 'value' => false },
-              'automount-open'          => { 'value' => false },
-              'autorun-never'           => { 'value' => true },
+          is_expected.to create_dconf__settings('GNOME dconf settings: simp_gnome').with(
+            ensure: 'present',
+            profile: 'simp_gnome',
+            settings_hash: {
+              'org/gnome/desktop/media-handling' => {
+                'automount' => { 'value' => false },
+                'automount-open' => { 'value' => false },
+                'autorun-never' => { 'value' => true },
+              },
+              'org/gnome/settings-daemon/plugins/media-keys' => {
+                'logout' => { 'value' => "''" },
+              },
+              'org/gnome/settings-daemon/plugins/power' => {
+                'active' => { 'value' => false },
+              },
+              'org/gnome/desktop/session' => {
+                'idle-delay' => { 'value' => 'uint32 900' },
+              },
+              'org/gnome/desktop/lockdown' => {
+                'disable-lock-screen' => { 'value' => false },
+                'disable-show-password' => { 'value' => true },
+              },
+              'org/gnome/desktop/screensaver' => {
+                'idle-activation-enabled' => { 'value' => true },
+                'lock-enabled' => { 'value' => true },
+                'lock-delay' => { 'value' => 'uint32 0' },
+              },
             },
-            'org/gnome/settings-daemon/plugins/media-keys' => {
-              'logout'                  => { 'value' => "''" },
-            },
-            'org/gnome/settings-daemon/plugins/power' => {
-              'active'                  => { 'value' => false },
-            },
-            'org/gnome/desktop/session' => {
-              'idle-delay'              => { 'value' => 'uint32 900' },
-            },
-            'org/gnome/desktop/lockdown' => {
-              'disable-lock-screen'              => { 'value' => false },
-              'disable-show-password'            => { 'value' => true },
-            },
-            'org/gnome/desktop/screensaver' => {
-              'idle-activation-enabled' => { 'value' => true },
-              'lock-enabled'            => { 'value' => true },
-              'lock-delay'              => { 'value' => 'uint32 0' },
-            },
-          },
-                                                                                         })
+          )
         }
       end
 
       context 'with a more populated packages' do
         let(:params) do
-          { packages: {
-            'good-package' => { 'ensure' => '1.2.3' },
-         'gnome-terminal' => :undef,
-          } }
+          {
+            packages: {
+              'good-package' => { 'ensure' => '1.2.3' },
+              'gnome-terminal' => :undef,
+            },
+          }
         end
 
         it { is_expected.to create_package('good-package').with_ensure('1.2.3') }

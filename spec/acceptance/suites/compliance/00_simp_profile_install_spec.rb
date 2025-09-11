@@ -4,7 +4,7 @@ test_name 'gnome STIG enforcement of simp profile'
 
 describe 'gnome STIG enforcement of simp profile' do
   let(:manifest) do
-    <<-EOS
+    <<~EOS
       include 'gnome'
     EOS
   end
