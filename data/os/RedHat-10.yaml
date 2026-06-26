@@ -1,0 +1,7 @@
+---
+# EL10 dropped the X11 session and gnome-terminal in favor of the Wayland
+# session and ptyxis (the GNOME 47+ default terminal).
+gnome::packages:
+  gnome-control-center: ~
+  gnome-session-wayland-session: ~
+  ptyxis: ~

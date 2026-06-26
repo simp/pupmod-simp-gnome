@@ -21,7 +21,12 @@ describe 'gnome class' do
         end
 
         it 'has GNOME installed' do
-          expect(host.check_for_command('gnome-session')).to be true
+          # NOTE: Beaker's check_for_command relies on the `which` binary, which
+          # is not present in the minimal EL8/EL9 base images (it is only pulled
+          # in as a transitive dependency on EL10). Probe for the binary with the
+          # `command -v` shell builtin instead so this works on every platform.
+          result = on(host, 'command -v gnome-session', accept_all_exit_codes: true)
+          expect(result.exit_code).to eq(0)
         end
       end
     end
