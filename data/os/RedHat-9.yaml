@@ -2,3 +2,5 @@
 gnome::packages:
   gnome-control-center: ~
   gnome-session-wayland-session: ~
+  gnome-session-xsession: ~
+  gnome-terminal: ~

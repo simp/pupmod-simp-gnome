@@ -4,13 +4,22 @@ packages_common = [
   'at-spi2-atk',
   'dconf',
   'gnome-desktop3',
-  'gnome-session-xsession',
   'gnome-session',
-  'gnome-terminal',
   'gnome-user-docs',
   'nautilus',
   'orca',
   'yelp',
+]
+
+# EL10 dropped the X11 session and gnome-terminal in favor of the Wayland
+# session and ptyxis.
+packages_el8_9 = [
+  'gnome-session-xsession',
+  'gnome-terminal',
+]
+
+packages_el10 = [
+  'ptyxis',
 ]
 
 packages_el8 = [
@@ -47,6 +56,16 @@ describe 'gnome' do
         end
         if os_facts[:os][:release][:major] == '8'
           packages_el8.each do |pkg|
+            it { is_expected.to contain_package(pkg).with_ensure(%r{\A(present|installed)\Z}) }
+          end
+        end
+        if ['8', '9'].include?(os_facts[:os][:release][:major])
+          packages_el8_9.each do |pkg|
+            it { is_expected.to contain_package(pkg).with_ensure(%r{\A(present|installed)\Z}) }
+          end
+        end
+        if os_facts[:os][:release][:major] == '10'
+          packages_el10.each do |pkg|
             it { is_expected.to contain_package(pkg).with_ensure(%r{\A(present|installed)\Z}) }
           end
         end

@@ -16,9 +16,7 @@ gnome::packages:
   dconf: ~
   gnome-desktop3: ~
   gnome-session: ~
-  gnome-session-xsession: ~
   gnome-settings-daemon: ~
-  gnome-terminal: ~
   gnome-user-docs: ~
   nautilus: ~
   orca: ~
