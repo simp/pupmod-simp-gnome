@@ -12,7 +12,7 @@ lock down media auto-mounting/auto-run, disable the Ctrl-Alt-Del logout binding
 and the physical power-button action, enforce a 15-minute idle screen lock, and
 enable the screensaver lock; it also installs a set of `polkit` authorization
 policies (via `simp/polkit`) allowing any user to shut down or restart the
-system (`manifests/init.pp:1`, `manifests/config.pp:1`, `data/common.yaml:12-73`).
+system (`manifests/init.pp`, `manifests/config.pp`, `data/common.yaml`).
 
 The module does not force a state beyond installing packages and writing dconf
 /polkit configuration; all of the actual hardening values are data-driven and
@@ -22,42 +22,42 @@ live in `data/common.yaml` (overridable through Hiera deep merge).
 
 The module has one public class and one private class; there are no defines.
 
-- **`gnome` (`manifests/init.pp:36-56`)** — Public entry class (consumers
+- **`gnome` (`manifests/init.pp`)** — Public entry class (consumers
   `include 'gnome'`; it is *not* `assert_private()`'d). It calls
-  `simplib::assert_metadata($module_name)` (`init.pp:44`) then installs packages
-  and optionally delegates configuration. Parameters (`init.pp:37-41`, all but
+  `simplib::assert_metadata($module_name)` (`init.pp`) then installs packages
+  and optionally delegates configuration. Parameters (`init.pp`, all but
   the last are `default`-less and supplied from module data):
   - `$configure` (`Boolean`, **no default**) — master switch for applying the
-    dconf/polkit configuration; from `data/common.yaml:12` (`true`).
+    dconf/polkit configuration; from `data/common.yaml` (`true`).
   - `$dconf_hash` (`Hash[String[1], Dconf::SettingsHash]`, **no default**) — the
-    nested dconf settings tree, keyed by profile name; from `data/common.yaml:32`.
+    nested dconf settings tree, keyed by profile name; from `data/common.yaml`.
   - `$dconf_profile_hierarchy` (`Dconf::DBSettings`, **no default**) — the dconf
-    db priority/profile definition; from `data/common.yaml:27`.
+    db priority/profile definition; from `data/common.yaml`.
   - `$packages` (`Hash[String[1], Optional[Hash]]`, **no default**) — the package
     list to install; setting it **overrides** (deep-merged) the default list;
-    from `data/common.yaml:14`. A per-package `ensure` may be supplied in each
-    entry's hash (`init.pp:20-30` docstring).
+    from `data/common.yaml`. A per-package `ensure` may be supplied in each
+    entry's hash (`init.pp` docstring).
   - `$package_ensure` (`Simplib::PackageEnsure`) — the **only** parameter with a
     default: `simplib::lookup('simp_options::package_ensure', { 'default_value'
-    => 'installed' })` (`init.pp:41`). Applied as the `ensure` default for every
+    => 'installed' })` (`init.pp`). Applied as the `ensure` default for every
     installed package; overridden per-package by `$packages`.
 
   Control flow and resources:
-  - `simplib::install { 'gnome' }` (`init.pp:46-49`) — installs `$packages` with
+  - `simplib::install { 'gnome' }` (`init.pp`) — installs `$packages` with
     `defaults => { 'ensure' => $package_ensure }`.
-  - **configure branch** (`init.pp:51-55`): if `$configure`, `include
+  - **configure branch** (`init.pp`): if `$configure`, `include
     'gnome::config'` and order it after the install
     (`Simplib::Install['gnome'] -> Class['gnome::config']`).
 
-- **`gnome::config` (`manifests/config.pp:4-31`)** — Private class
-  (`assert_private()` at `config.pp:5`); only reachable via `gnome`. It:
-  - `dconf::profile { 'GNOME' }` (`config.pp:7-10`) with `target => 'user'` and
+- **`gnome::config` (`manifests/config.pp`)** — Private class
+  (`assert_private()` at `config.pp`); only reachable via `gnome`. It:
+  - `dconf::profile { 'GNOME' }` (`config.pp`) with `target => 'user'` and
     `entries => $gnome::dconf_profile_hierarchy`.
   - Iterates `$gnome::dconf_hash.each |$profile_name, $settings|` and declares a
     `dconf::settings { "GNOME dconf settings: ${profile_name}" }` per profile
     with `profile => $profile_name, settings_hash => $settings`
-    (`config.pp:12-17`).
-  - `polkit::authorization::basic_policy { ... }` (`config.pp:19-30`) — a default
+    (`config.pp`).
+  - `polkit::authorization::basic_policy { ... }` (`config.pp`) — a default
     of `ensure => 'present', priority => 10, result => 'yes'`, then two policies:
     "Allow anyone to shutdown system"
     (`org.freedesktop.consolekit.system.stop`) and "Allow anyone to restart
@@ -66,25 +66,25 @@ The module has one public class and one private class; there are no defines.
 ### Gotchas / non-obvious details
 
 - **The `Dconf::*` parameter types are not defined in this module.**
-  `Dconf::SettingsHash` and `Dconf::DBSettings` (`init.pp:38-39`) come from the
+  `Dconf::SettingsHash` and `Dconf::DBSettings` (`init.pp`) come from the
   `simp/dconf` dependency — this module has no `types/` directory of its own.
 - **Setting `gnome::packages` overrides the default list**, it does not append
-  to it (`init.pp:23` docstring). Both `gnome::packages` and `gnome::dconf_hash`
+  to it (`init.pp` docstring). Both `gnome::packages` and `gnome::dconf_hash`
   are declared as **deep-merge** with `knockout_prefix: '--'` in
-  `data/common.yaml:2-10`, so Hiera layers merge into (and can remove keys from)
+  `data/common.yaml`, so Hiera layers merge into (and can remove keys from)
   the defaults rather than replacing them wholesale.
 - **The polkit policies weaken security by design**: they allow *any* user to
-  shut down or restart the machine (`config.pp:24-29`). This is intentional for
+  shut down or restart the machine (`config.pp`). This is intentional for
   a desktop but worth flagging.
-- **`gnome::config` is a no-op unless `$configure` is true** (`init.pp:51`);
+- **`gnome::config` is a no-op unless `$configure` is true** (`init.pp`);
   with `gnome::configure: false` the module only installs packages.
 - **The `dconf_hash` profile keys must match `dconf_profile_hierarchy`** — the
-  inline comment in `data/common.yaml:33` notes the `simp_gnome` key must match
+  inline comment in `data/common.yaml` notes the `simp_gnome` key must match
   what is declared under `dconf_profile_hierarchy`.
 - **`simp/simp_options` is NOT a declared dependency** in `metadata.json`, yet
   the manifest consumes the `simp_options::*` seam via `simplib::lookup`
   (provided by `simp/simplib`). `simp_options` appears only as a fixture
-  (`.fixtures.yml:8`).
+  (`.fixtures.yml`).
 - **`templates/dconf.erb` appears unused by the manifests.** Neither `gnome` nor
   `gnome::config` references it (the dconf writing is delegated to
   `simp/dconf`); it is a leftover/support template.
@@ -93,9 +93,9 @@ The module has one public class and one private class; there are no defines.
 
 The module has a **single** `simp_options` seam call, in `manifests/init.pp`:
 
-| Line | Key | `default_value` |
+| File | Key | `default_value` |
 |------|-----|-----------------|
-| `init.pp:41` | `simp_options::package_ensure` | `'installed'` |
+| `init.pp` | `simp_options::package_ensure` | `'installed'` |
 
 All other configuration comes through plain module-data Hiera lookups of the
 class parameters (`gnome::configure`, `gnome::packages`, `gnome::dconf_hash`,
@@ -199,7 +199,7 @@ Puppet range is `>= 7 < 9`.
   parameters.
 - Keep the package list, dconf settings, and profile hierarchy in module data
   (`data/*.yaml`), not hard-coded in the manifests; respect the deep-merge
-  `lookup_options` (`data/common.yaml:2-10`) so consumers can layer overrides.
+  `lookup_options` (`data/common.yaml`) so consumers can layer overrides.
 - Keep `gnome::config` private (`assert_private()`) — it is an implementation
   detail of `gnome`, reached only through the configure branch.
 - Continue routing the package-ensure toggle through
