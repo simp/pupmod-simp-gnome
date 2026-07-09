@@ -109,7 +109,7 @@
 - Added polkit dependency
 - `dconf update` execs now catch failures
 
-* Mon Mar 15 2017 Jeanne Greulich <jeanne.greulich@onyxpoint.com> - 6.0.2-0
+* Wed Mar 15 2017 Jeanne Greulich <jeanne.greulich@onyxpoint.com> - 6.0.2-0
 - Fixed packages lists
 - Fixed screensaver logic
 - gconf type was not getting values correctly
