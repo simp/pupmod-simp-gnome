@@ -184,7 +184,7 @@ bundle exec rake rubocop
 puppet strings generate --format markdown --out REFERENCE.md
 
 # Run the default beaker acceptance suite (not run in CI; run locally)
-bundle exec rake beaker:suites[default]
+bundle exec rake 'beaker:suites[default]'
 ```
 
 Relevant gem pins (from `Gemfile`): `puppetlabs_spec_helper ~> 8.0.0`,
