@@ -38,6 +38,8 @@ Use the module to configure Gnome
 
 @see data/common.yaml
 
+Default value: `true`
+
 ##### <a name="-gnome--dconf_hash"></a>`dconf_hash`
 
 Data type: `Hash[String[1], Dconf::SettingsHash]`
@@ -47,6 +49,8 @@ dconf settings specific to Gnome 3
 @see data/common.yaml
 @see https://wiki.gnome.org/Projects/dconf/SystemAdministrators
 
+Default value: `{ 'simp_gnome' => { 'org/gnome/desktop/media-handling' => { 'automount' => { 'value' => false }, 'automount-open' => { 'value' => false }, 'autorun-never' => { 'value' => true } }, 'org/gnome/settings-daemon/plugins/media-keys' => { 'logout' => { 'value' => '''' } }, 'org/gnome/settings-daemon/plugins/power' => { 'active' => { 'value' => false } }, 'org/gnome/desktop/session' => { 'idle-delay' => { 'value' => 'uint32 900' } }, 'org/gnome/desktop/lockdown' => { 'disable-lock-screen' => { 'value' => false }, 'disable-show-password' => { 'value' => true } }, 'org/gnome/desktop/screensaver' => { 'idle-activation-enabled' => { 'value' => true }, 'lock-enabled' => { 'value' => true }, 'lock-delay' => { 'value' => 'uint32 0' } } } }`
+
 ##### <a name="-gnome--dconf_profile_hierarchy"></a>`dconf_profile_hierarchy`
 
 Data type: `Dconf::DBSettings`
@@ -55,6 +59,8 @@ Dconf db priority
 
 @see https://help.gnome.org/admin/system-admin-guide/stable/dconf.html.en
 @see https://wiki.gnome.org/Projects/dconf/SystemAdministrators
+
+Default value: `{ 'simp_gnome' => { 'type' => 'system', 'order' => 10 } }`
 
 ##### <a name="-gnome--packages"></a>`packages`
 
@@ -70,6 +76,8 @@ A Hash of packages to be installed
   { 'gedit' => { 'ensure' => '3.14.3' } }
 
 @see data/common.yaml
+
+Default value: `{ 'at-spi2-atk' => undef, 'dconf' => undef, 'gnome-desktop3' => undef, 'gnome-session' => undef, 'gnome-settings-daemon' => undef, 'gnome-user-docs' => undef, 'nautilus' => undef, 'orca' => undef, 'yelp' => undef }`
 
 ##### <a name="-gnome--package_ensure"></a>`package_ensure`
 
