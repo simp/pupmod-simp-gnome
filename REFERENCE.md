@@ -87,4 +87,3 @@ The SIMP global catalyst to set the default `ensure` settings for packages
 managed with this module. Will be overwitten by $packages.
 
 Default value: `simplib::lookup('simp_options::package_ensure', { 'default_value' => 'installed' })`
-
